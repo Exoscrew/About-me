@@ -5,156 +5,173 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Exoscrew</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter';color:#00ffcc;background:#000;overflow-x:hidden;}
-canvas{position:fixed;top:0;left:0;z-index:-1;}
-.container{max-width:900px;width:90%;margin:0 auto;padding:40px;display:flex;flex-direction:column;gap:60px;}
-.section{padding:20px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(0,255,204,0.3);box-shadow:0 0 50px rgba(0,255,204,0.5);text-align:center;opacity:0;}
-.hero h1, .signature h1{font-family:'Orbitron';font-size:clamp(2rem,5vw,3rem);text-shadow:0 0 35px #00ffcc,0 0 55px #00ffaa;margin-bottom:15px;}
+body{font-family:'Inter';color:#fff;background:#000;overflow-x:hidden;}
+canvas{position:fixed;top:0;left:0;z-index:-2;}
+.hud{position:fixed;width:100%;display:flex;justify-content:space-between;padding:15px;font-family:'Orbitron';font-weight:700;z-index:10;}
+.hud .time-date{font-size:clamp(0.8rem,2vw,1.2rem);}
+.hud .views{font-size:clamp(0.8rem,2vw,1.2rem);}
+.container{max-width:900px;width:90%;margin:0 auto;padding:60px 0;display:flex;flex-direction:column;gap:60px;position:relative;z-index:5;}
+.section{padding:20px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 50px rgba(255,255,255,0.2);text-align:center;opacity:0;transition:0.5s;cursor:default;}
+.section h1{font-family:'Orbitron';font-size:clamp(2rem,5vw,3rem);margin-bottom:15px;text-shadow:0 0 15px #fff,0 0 30px #fff;}
+.skill-card{display:inline-block;margin:5px;padding:10px 15px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:0.3s;}
+.skill-card:hover{background:rgba(255,255,255,0.1);}
 .socials{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
-.social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:15px;background:rgba(0,255,204,0.1);border:1px solid rgba(0,255,204,0.3);color:#00ffcc;text-decoration:none;font-size:16px;transition:0.4s;cursor:pointer;}
-.social img{width:32px;height:32px;object-fit:contain;margin-bottom:5px;}
-.skill-card{display:inline-block;margin:5px;padding:10px 15px;border-radius:10px;background:rgba(0,255,204,0.1);border:1px solid rgba(0,255,204,0.3);}
-#chat{height:150px;overflow-y:auto;border:1px solid rgba(0,255,204,0.3);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);}
-#chatInput{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,255,204,0.3);background:rgba(0,0,0,0.1);color:#00ffcc;}
+.social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;text-decoration:none;font-size:16px;transition:0.4s;}
+.social img{width:32px;height:32px;margin-bottom:5px;}
+#chat{height:150px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);}
+#chatInput{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.1);color:#fff;}
 </style>
 </head>
 <body>
-<canvas id="particles"></canvas>
-<div class="container">
+<canvas id="space"></canvas>
 
-<!-- Intro -->
-<div class="section hero">
-<h1>Welcome!</h1>
+<div class="hud">
+  <div class="time-date" id="timeDate">Time | Date</div>
+  <div class="views">Views: 12345</div>
 </div>
 
-<!-- About Me -->
+<div class="container">
+<div class="section hero"><h1>Welcome!</h1></div>
+
 <div class="section">
 <h1>About Me</h1>
-<p>I’m Exoscrew, male, from India.<br>Hobbies: Coding, Gaming, Anime, Music.<br>My Works: Web Projects, AI Experiments, Interactive Sites.</p>
+<p>I’m Exoscrew, male, from India.<br>Hobbies: Coding, Gaming, Anime, Music.<br>My Works: Web Projects, Portfolio, Games.</p>
 </div>
 
-<!-- Skills -->
 <div class="section">
 <h1>Skills</h1>
-<div class="skill-card">HTML</div>
-<div class="skill-card">Python</div>
-<div class="skill-card">Java</div>
-<div class="skill-card">C+</div>
-<div class="skill-card">C#</div>
+<div class="skill-card" onclick="window.open('https://your-html-project.com','_blank')">HTML</div>
+<div class="skill-card" onclick="window.open('https://your-python-project.com','_blank')">Python</div>
+<div class="skill-card" onclick="window.open('https://your-java-project.com','_blank')">Java</div>
+<div class="skill-card" onclick="window.open('https://your-cplusplus-project.com','_blank')">C+</div>
+<div class="skill-card" onclick="window.open('https://your-csharp-project.com','_blank')">C#</div>
 </div>
 
-<!-- Socials -->
 <div class="section socials">
-<a href="https://youtube.com/@EXOSCREW" class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt
-</a>
-<a href="https://t.me/exoscrew" class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram
-</a>
-<a href="https://twitch.tv/exoscrew" class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733635.png" alt="Twitch">Twitch
-</a>
-<a href="https://instagram.com/exoscrew" class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Insta
-</a>
+<a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
+<a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
+<a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/211348.png" alt="Twitch">Twitch</a>
+<a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Insta</a>
 </div>
 
-<!-- Signature -->
-<div class="section">
-<h1 class="signature">エクソスクリュー</h1>
-</div>
+<div class="section"><h1 class="signature">エクソスクリュー</h1></div>
 
-<!-- Contact -->
 <div class="section">
 <h1>Contact</h1>
 <div id="chat"></div>
 <input type="text" placeholder="Type your message..." id="chatInput">
 </div>
 
-<!-- Outro -->
-<div class="section hero">
-<h1>Thanks for visiting!</h1>
-<h1 class="signature">🕊</h1>
-</div>
-
+<div class="section hero"><h1>Thanks for visiting!</h1><h1 class="signature">🕊</h1></div>
 </div>
 
 <script>
-// Particle Background
-const canvas=document.getElementById('particles');
+// === Three.js Space Background + Jets + Lasers ===
+const canvas=document.getElementById('space');
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
-// Particles
-const particlesCount=1200;
+// Stars
+const starCount=1500;
 const geometry=new THREE.BufferGeometry();
-const positions=new Float32Array(particlesCount*3);
-for(let i=0;i<particlesCount*3;i++){positions[i]=(Math.random()-0.5)*400;}
+const positions=new Float32Array(starCount*3);
+for(let i=0;i<starCount*3;i++) positions[i]=(Math.random()-0.5)*1000;
 geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-const material=new THREE.PointsMaterial({color:0x00ffcc,size:1.8});
-const particles=new THREE.Points(geometry,material);
-scene.add(particles);
+const material=new THREE.PointsMaterial({color:0xffffff,size:1.5});
+const stars=new THREE.Points(geometry,material);
+scene.add(stars);
 
-// Fighter Jets
-const jetGeometry=new THREE.ConeGeometry(1,3,4);
-const jetMaterial=new THREE.MeshBasicMaterial({color:0xff0000});
+// Jets
+const jetGeo=new THREE.ConeGeometry(1.5,4,4);
+const jetMat=new THREE.MeshBasicMaterial({color:0xff0000});
 const jets=[];
-for(let i=0;i<5;i++){
-  const jet=new THREE.Mesh(jetGeometry,jetMaterial);
-  jet.position.set(Math.random()*200-100,Math.random()*100-50,Math.random()*200-100);
+for(let i=0;i<6;i++){
+  const jet=new THREE.Mesh(jetGeo,jetMat);
+  jet.position.set(Math.random()*500-250,Math.random()*200-100,Math.random()*500-250);
   jet.rotation.x=Math.PI/2;
   scene.add(jet);
-  jets.push({mesh:jet, speed:0.5+Math.random()});
+  jets.push({mesh:jet,speed:0.5+Math.random(),lasers:[]});
 }
 
-camera.position.z=120;
+// Sounds
+const laserSound=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b1f9f97aa.mp3?filename=laser-1.mp3'); laserSound.volume=0.15;
+const explodeSound=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_3a2f9b1e1b.mp3?filename=explosion-1.mp3'); explodeSound.volume=0.25;
 
-// Animate everything
+// Lasers
+const lasers=[];
+function shootLaser(jet){
+  const laserGeo=new THREE.CylinderGeometry(0.2,0.2,6,8);
+  const laserMat=new THREE.MeshBasicMaterial({color:0xffffff});
+  const laser=new THREE.Mesh(laserGeo,laserMat);
+  laser.rotation.z=Math.PI/2;
+  laser.position.set(jet.mesh.position.x,jet.mesh.position.y,jet.mesh.position.z-3);
+  scene.add(laser);
+  lasers.push({mesh:laser,speed:3});
+  laserSound.currentTime=0; laserSound.play();
+}
+
+// Animate
+camera.position.z=150;
 function animate(){
   requestAnimationFrame(animate);
-  particles.rotation.y+=0.0015;
+  stars.rotation.y+=0.0015;
+
   jets.forEach(j=>{
     j.mesh.position.x+=j.speed;
-    j.mesh.position.y=Math.sin(j.mesh.position.x/20)*20;
-    if(j.mesh.position.x>150) j.mesh.position.x=-150;
+    j.mesh.position.y+=Math.sin(j.mesh.position.x/30)*25;
+    if(Math.random()<0.01) shootLaser(j);
+    if(j.mesh.position.x>300) j.mesh.position.x=-300;
   });
+
+  lasers.forEach((l,i)=>{
+    l.mesh.position.x+=l.speed;
+    if(l.mesh.position.x>300){
+      scene.remove(l.mesh); lasers.splice(i,1);
+      explodeSound.currentTime=0; explodeSound.play();
+    }
+  });
+
   renderer.render(scene,camera);
 }
 animate();
 
 // GSAP Fade-in Sections
-gsap.utils.toArray('.section').forEach((section,i)=>{
-  gsap.to(section,{opacity:1,duration:1.5,delay:i*0.4,ease:'power2.out'});
+gsap.utils.toArray('.section').forEach((s,i)=>{
+  gsap.to(s,{opacity:1,duration:1.5,delay:i*0.4,ease:'power2.out'});
 });
 
-// Chat Simulation
+// AI Chat
 const chat=document.getElementById('chat');
 const input=document.getElementById('chatInput');
 if(input){input.addEventListener('keypress',e=>{
   if(e.key==='Enter' && input.value.trim()!==''){
-    const msg=document.createElement('div');
-    msg.textContent='You: '+input.value;
+    const msg=document.createElement('div'); msg.textContent='You: '+input.value;
     chat.appendChild(msg);
-    const reply=document.createElement('div');
-    reply.textContent='Message received!';
+    const reply=document.createElement('div'); reply.textContent='Message received!';
     chat.appendChild(reply);
-    input.value='';
-    chat.scrollTop=chat.scrollHeight;
+    input.value=''; chat.scrollTop=chat.scrollHeight;
   }
 });}
 
+// Time & Date
+function updateTime(){
+  const now=new Date();
+  const time=now.toLocaleTimeString();
+  const date=now.toLocaleDateString();
+  document.getElementById('timeDate').textContent=`${time} | ${date}`;
+}
+setInterval(updateTime,1000); updateTime();
+
 // Background Music
 const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e2f9a79d0.mp3?filename=cosmic-ambient-110728.mp3');
-bgMusic.loop=true;
-bgMusic.volume=0.25;
-bgMusic.play();
+bgMusic.loop=true; bgMusic.volume=0.2; bgMusic.play();
 </script>
 </body>
 </html>
