@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,37 +17,65 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 .socials{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
 .social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:15px;background:rgba(0,255,204,0.1);border:1px solid rgba(0,255,204,0.3);color:#00ffcc;text-decoration:none;font-size:16px;transition:0.4s;cursor:pointer;}
 .social img{width:32px;height:32px;object-fit:contain;margin-bottom:5px;}
+.skill-card{display:inline-block;margin:5px;padding:10px 15px;border-radius:10px;background:rgba(0,255,204,0.1);border:1px solid rgba(0,255,204,0.3);}
+#chat{height:150px;overflow-y:auto;border:1px solid rgba(0,255,204,0.3);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);}
+#chatInput{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,255,204,0.3);background:rgba(0,0,0,0.1);color:#00ffcc;}
 </style>
 </head>
 <body>
 <canvas id="particles"></canvas>
-<div class="container"><!-- Intro --><div class="section hero">
+<div class="container">
+
+<!-- Intro -->
+<div class="section hero">
 <h1>Welcome!</h1>
-</div><!-- About Me --><div class="section">
+</div>
+
+<!-- About Me -->
+<div class="section">
 <h1>About Me</h1>
 <p>I’m Exoscrew, male, from India.<br>Skills: HTML • Python • Java • C+ • C#</p>
-</div><!-- Skills --><div class="section">
+</div>
+
+<!-- Skills -->
+<div class="section">
 <h1>Skills</h1>
 <div class="skill-card">HTML</div>
 <div class="skill-card">Python</div>
 <div class="skill-card">Java</div>
 <div class="skill-card">C+</div>
 <div class="skill-card">C#</div>
-</div><!-- Socials --><div class="section socials">
+</div>
+
+<!-- Socials -->
+<div class="section socials">
 <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
 <a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
 <a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111653.png" alt="Twitch">Twitch</a>
 <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384064.png" alt="Instagram">Insta</a>
-</div><!-- Signature --><div class="section">
+</div>
+
+<!-- Signature -->
+<div class="section">
 <h1 class="signature">エクソスクリュー</h1>
-</div><!-- Contact --><div class="section">
+</div>
+
+<!-- Contact -->
+<div class="section">
 <h1>Contact</h1>
 <div id="chat"></div>
 <input type="text" placeholder="Type your message..." id="chatInput">
-</div><!-- Outro --><div class="section hero">
+</div>
+
+<!-- Outro -->
+<div class="section hero">
 <h1>Thanks for visiting!</h1>
-<h1 class="signature">🕊</h1>
-</div></div><script>
+<h1 class="signature">エクソスクリュー</h1>
+</div>
+
+</div>
+
+<script>
 // Particle Background
 const canvas=document.getElementById('particles');
 const scene=new THREE.Scene();
@@ -94,13 +123,24 @@ animate();
 // Contact Chat Simulation
 const chat=document.getElementById('chat');
 const input=document.getElementById('chatInput');
-if(input){input.addEventListener('keypress',e=>{if(e.key==='Enter' && input.value.trim()!==''){const msg=document.createElement('div');msg.textContent='You: '+input.value;chat.appendChild(msg);const reply=document.createElement('div');reply.textContent='Message received!';chat.appendChild(reply);input.value='';chat.scrollTop=chat.scrollHeight;}});
-}
+if(input){input.addEventListener('keypress',e=>{
+  if(e.key==='Enter' && input.value.trim()!==''){
+    const msg=document.createElement('div');
+    msg.textContent='You: '+input.value;
+    chat.appendChild(msg);
+    const reply=document.createElement('div');
+    reply.textContent='Message received!';
+    chat.appendChild(reply);
+    input.value='';
+    chat.scrollTop=chat.scrollHeight;
+  }
+});}
 
 // Background Music
 const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e2f9a79d0.mp3?filename=cosmic-ambient-110728.mp3');
 bgMusic.loop=true;
 bgMusic.volume=0.25;
 bgMusic.play();
-</script></body>
+</script>
+</body>
 </html>
