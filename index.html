@@ -18,9 +18,8 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 .socials{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
 .social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:15px;background:rgba(0,255,204,0.1);border:1px solid rgba(0,255,204,0.3);color:#00ffcc;text-decoration:none;font-size:16px;transition:0.4s;cursor:pointer;}
 .social img{width:32px;height:32px;object-fit:contain;margin-bottom:5px;}
-.nav{position:fixed;top:15px;right:20px;z-index:1000;display:flex;gap:15px;flex-wrap:wrap;}
-.nav a{color:#00ffcc;text-decoration:none;font-weight:500;padding:8px 12px;border-radius:12px;background:rgba(0,255,204,0.05);backdrop-filter:blur(15px);transition:0.5s;}
-.nav a:hover{background:rgba(0,255,204,0.2);transform:scale(1.1) rotate(-1deg);}
+.sections-list{display:flex;flex-direction:column;gap:20px;cursor:pointer;font-size:1.5rem;}
+.sections-list div:hover{color:#ff00ff;}
 </style>
 </head>
 <body>
@@ -29,12 +28,22 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 <h1>Welcome!</h1>
 <p style="cursor:pointer;margin-top:20px;font-size:1rem;">Click to continue</p>
 </div>
-</div><!-- Sections Pages --><div id="page2" class="page">
+</div><!-- Sections Index Page --><div id="page2" class="page">
+<div class="section">
+<h1>Sections</h1>
+<div class="sections-list">
+<div data-target="page3">i) About Me</div>
+<div data-target="page4">ii) Skills</div>
+<div data-target="page5">iii) Socials</div>
+<div data-target="page6">iv) Signature</div>
+</div>
+</div>
+</div><!-- About Me Page --><div id="page3" class="page">
 <div class="section">
 <h1>About Me</h1>
 <p>I’m Exoscrew, male, from India.<br>Skills: HTML • Python • Java • C+ • C#</p>
 </div>
-</div><div id="page3" class="page">
+</div><!-- Skills Page --><div id="page4" class="page">
 <div class="section">
 <h1>Skills</h1>
 <div class="skill-card">HTML</div>
@@ -43,24 +52,24 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 <div class="skill-card">C+</div>
 <div class="skill-card">C#</div>
 </div>
-</div><div id="page4" class="page">
+</div><!-- Socials Page --><div id="page5" class="page">
 <div class="section socials">
 <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
 <a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
 <a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Twitch">Twitch</a>
 <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384064.png" alt="Instagram">Insta</a>
 </div>
-</div><div id="page5" class="page">
+</div><!-- Signature Page --><div id="page6" class="page">
 <div class="section">
 <h1 class="signature">エクソスクリュー</h1>
 </div>
-</div><div id="page6" class="page">
+</div><!-- Contact Page --><div id="page7" class="page">
 <div class="section">
 <h1>Contact</h1>
 <div id="chat"></div>
 <input type="text" placeholder="Type your message..." id="chatInput">
 </div>
-</div><div id="page7" class="page">
+</div><!-- Outro Page --><div id="page8" class="page">
 <div class="section hero">
 <h1>Thanks for visiting!</h1>
 <h1 class="signature">エクソスクリュー</h1>
@@ -88,10 +97,20 @@ animate();
 // Pages Handling
 const pages=document.querySelectorAll('.page');
 let currentPage=1;
-function showPage(index){pages.forEach((p,i)=>{p.classList.remove('active');});pages[index].classList.add('active');currentPage=index;}
+function showPage(index){pages.forEach(p=>p.classList.remove('active'));pages[index].classList.add('active');currentPage=index;}
 
 // Intro click to continue
 document.getElementById('intro').addEventListener('click',()=>{showPage(1);});
+
+// Sections click navigation
+document.querySelectorAll('.sections-list div').forEach(el=>{
+el.addEventListener('click',()=>{
+  const target=el.getAttribute('data-target');
+  const targetPage=document.getElementById(target);
+  const targetIndex=Array.from(pages).indexOf(targetPage);
+  showPage(targetIndex);
+});
+});
 
 // Arrow navigation
 document.addEventListener('keydown',e=>{
