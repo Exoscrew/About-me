@@ -205,26 +205,48 @@ stickyNote.addEventListener('click',()=>{
   stickyNote.style.background="#ff0000";
   stickyNote.style.color="#fff";
 
-  // Super Lag Shake & Scale
-  gsap.to('#pageContent',{
-    duration:5, rotation:15, scale:1.2, x:50, y:50,
-    repeat:10, yoyo:true, ease:"power4.inOut"
-  });
-  gsap.to('#pageContent',{
-    duration:5, backgroundColor:"rgba(255,0,0,0.2)",
-    repeat:10, yoyo:true
+  const content = document.getElementById('pageContent');
+
+  // Simulate explosion: sections fly, rotate, scale, blur
+  gsap.to(content, {
+    duration: 0.1,
+    rotation: "+=5",
+    x: "+=20",
+    y: "+=20",
+    repeat: 50,
+    yoyo: true,
+    ease: "power4.inOut",
+    onUpdate: () => {
+      content.style.filter = `blur(${Math.random()*8}px) brightness(${0.7+Math.random()*0.6})`;
+    }
   });
 
-  // Restore after 5 seconds
-  setTimeout(()=>{
-    gsap.to('#pageContent',{
-      duration:1, rotation:0, scale:1, x:0, y:0,
-      backgroundColor:"rgba(0,0,0,0)"
-    });
-    stickyNote.textContent="😎 Got prank!";
-    stickyNote.style.background="#fff";
-    stickyNote.style.color="#000";
-  },5000);
+  // Create fake particles (like debris)
+  const debris = [];
+  for(let i=0; i<50; i++){
+    const div = document.createElement('div');
+    div.style.position = 'fixed';
+    div.style.width = div.style.height = Math.random()*8 + 4 + 'px';
+    div.style.background = `hsl(${Math.random()*360},100%,50%)`;
+    div.style.left = Math.random()*window.innerWidth + 'px';
+    div.style.top = Math.random()*window.innerHeight + 'px';
+    div.style.zIndex = 1000;
+    div.style.borderRadius = "50%";
+    document.body.appendChild(div);
+    debris.push(div);
+    gsap.to(div, {duration:5, x:(Math.random()-0.5)*1000, y:(Math.random()-0.5)*1000, rotation:360*Math.random(), opacity:0, ease:"power2.out"});
+  }
+
+  // Restore after 5.5s
+  setTimeout(() => {
+    gsap.killTweensOf(content);
+    content.style.transform = '';
+    content.style.filter = '';
+    debris.forEach(d => document.body.removeChild(d));
+    stickyNote.textContent = "😎 Got prank!";
+    stickyNote.style.background = "#fff";
+    stickyNote.style.color = "#000";
+  }, 5500);
 });
 </script>
 </body>
