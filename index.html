@@ -15,24 +15,37 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
 .hud .time-date{font-size:clamp(0.9rem,2vw,1.3rem);}
 .hud .views{font-size:clamp(0.9rem,2vw,1.3rem);}
 .container{max-width:1000px;width:90%;margin:0 auto;padding:60px 0;display:flex;flex-direction:column;gap:60px;position:relative; z-index:5;}
-.section{padding:30px;border-radius:25px;background:rgba(255,255,255,0.05);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 60px rgba(255,255,255,0.2);text-align:center;opacity:0;transition:0.5s;}
+.section{
+  padding:30px;border-radius:25px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,0.2);
+  box-shadow:0 0 20px rgba(255,255,255,0.2),
+             0 0 40px rgba(0,255,255,0.1),
+             0 0 80px rgba(255,255,255,0.05);
+  text-align:center;opacity:0;transition:0.5s, box-shadow 0.5s;
+  animation: pulseGlow 4s infinite ease-in-out;
+}
+@keyframes pulseGlow{
+  0%,100% {box-shadow:0 0 20px rgba(0,255,255,0.2),0 0 40px rgba(255,255,255,0.1);}
+  50% {box-shadow:0 0 50px rgba(0,255,255,0.5),0 0 80px rgba(255,255,255,0.2);}
+}
 .section h1{font-family:'Orbitron';font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:20px;text-shadow:0 0 10px #fff,0 0 30px #fff;}
 .skill-card{display:inline-block;margin:8px;padding:12px 20px;border-radius:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:0.3s;color:#fff;text-shadow:0 0 5px #fff;}
-.skill-card:hover{background:rgba(255,255,255,0.12);box-shadow:0 0 20px #fff;}
+.skill-card:hover{background: rgba(0,255,255,0.12); box-shadow:0 0 20px #0ff,0 0 50px #0ff; transform:scale(1.05);}
 .socials{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
 .social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;text-decoration:none;font-size:16px;transition:0.4s;text-shadow:0 0 5px #fff;}
-.social img{width:36px;height:36px;margin-bottom:5px;filter:drop-shadow(0 0 5px #fff);}
+.social img{width:36px;height:36px;margin-bottom:5px;filter:drop-shadow(0 0 5px #0ff);}
+.social:hover{background: rgba(0,255,255,0.12); box-shadow:0 0 20px #0ff,0 0 50px #0ff; transform:scale(1.1);}
 #chat{height:150px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);color:#fff;text-shadow:0 0 5px #fff;}
 #chatInput{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.1);color:#fff;text-shadow:0 0 5px #fff;}
-#soundPrompt{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
-background:rgba(0,0,0,0.8);color:#fff;padding:30px;border-radius:20px;text-align:center;z-index:20;cursor:pointer;box-shadow:0 0 20px #fff;}
+#stickyNote{position:fixed;bottom:20px;right:20px;background:#fff;color:#000;padding:15px 20px;border-radius:10px;box-shadow:0 0 20px #fff;cursor:pointer;font-family:'Orbitron';z-index:15;text-align:center;}
+.signature{text-shadow:0 0 10px #0ff,0 0 40px #fff,0 0 80px #0ff;}
 </style>
 </head>
 <body>
 
 <canvas id="space"></canvas>
-
-<div id="soundPrompt">Click to activate sound 🔊</div>
 
 <div class="hud">
   <div class="time-date" id="timeDate">Time | Date</div>
@@ -57,10 +70,10 @@ background:rgba(0,0,0,0.8);color:#fff;padding:30px;border-radius:20px;text-align
   </div>
 
   <div class="section socials">
-    <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
+    <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">YT</a>
     <a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
     <a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968871.png" alt="Twitch">Twitch</a>
-    <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Insta</a>
+    <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Instagram</a>
   </div>
 
   <div class="section"><h1 class="signature">エクソスクリュー</h1></div>
@@ -74,8 +87,10 @@ background:rgba(0,0,0,0.8);color:#fff;padding:30px;border-radius:20px;text-align
   <div class="section hero"><h1>Thanks for visiting!</h1><h1 class="signature">🕊</h1></div>
 </div>
 
+<div id="stickyNote">⚠ Click me if you dare!</div>
+
 <script>
-// === Three.js Space + Jets (Black & White Crystal Theme) ===
+// === Three.js Space + Jets + Crystal Particles ===
 const canvas=document.getElementById('space');
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
@@ -93,6 +108,16 @@ const material=new THREE.PointsMaterial({color:0xffffff,size:1.5});
 const stars=new THREE.Points(geometry,material);
 scene.add(stars);
 
+// Crystal particles
+const crystalGeo = new THREE.BufferGeometry();
+const crystalCount = 500;
+const crystalPos = new Float32Array(crystalCount*3);
+for(let i=0;i<crystalCount*3;i++) crystalPos[i]=(Math.random()-0.5)*1000;
+crystalGeo.setAttribute('position', new THREE.BufferAttribute(crystalPos,3));
+const crystalMat = new THREE.PointsMaterial({color:0x00ffff,size:2,transparent:true,opacity:0.4});
+const crystals = new THREE.Points(crystalGeo, crystalMat);
+scene.add(crystals);
+
 // Jets
 const jetGeo=new THREE.ConeGeometry(1.5,4,4);
 const jetMat=new THREE.MeshBasicMaterial({color:0xffffff});
@@ -107,23 +132,6 @@ for(let i=0;i<6;i++){
 
 // Lasers
 const lasers=[];
-const laserSound=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b1f9f97aa.mp3?filename=laser-1.mp3'); laserSound.volume=0.15;
-const explodeSound=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_3a2f9b1e1b.mp3?filename=explosion-1.mp3'); explodeSound.volume=0.25;
-
-// Background Music
-const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e2f9a79d0.mp3?filename=cosmic-ambient-110728.mp3');
-bgMusic.loop=true; bgMusic.volume=0.2;
-
-// Sound Activation
-const soundPrompt=document.getElementById('soundPrompt');
-soundPrompt.addEventListener('click',()=>{
-  bgMusic.play();
-  laserSound.play(); laserSound.pause();
-  explodeSound.play(); explodeSound.pause();
-  soundPrompt.style.display='none';
-});
-
-// Shoot Laser
 function shootLaser(jet){
   const laserGeo=new THREE.CylinderGeometry(0.15,0.15,6,8);
   const laserMat=new THREE.MeshBasicMaterial({color:0xffffff});
@@ -132,7 +140,6 @@ function shootLaser(jet){
   laser.position.set(jet.mesh.position.x,jet.mesh.position.y,jet.mesh.position.z-3);
   scene.add(laser);
   lasers.push({mesh:laser,speed:3});
-  laserSound.currentTime=0; laserSound.play();
 }
 
 // Animate
@@ -140,6 +147,8 @@ camera.position.z=150;
 function animate(){
   requestAnimationFrame(animate);
   stars.rotation.y+=0.0015;
+  crystals.rotation.y += 0.0005;
+  crystals.material.opacity = 0.3 + Math.sin(Date.now()*0.005)*0.2;
 
   jets.forEach(j=>{
     j.mesh.position.x+=j.speed;
@@ -150,10 +159,7 @@ function animate(){
 
   lasers.forEach((l,i)=>{
     l.mesh.position.x+=l.speed;
-    if(l.mesh.position.x>300){
-      scene.remove(l.mesh); lasers.splice(i,1);
-      explodeSound.currentTime=0; explodeSound.play();
-    }
+    if(l.mesh.position.x>300){ scene.remove(l.mesh); lasers.splice(i,1);}
   });
 
   renderer.render(scene,camera);
@@ -191,6 +197,35 @@ setInterval(updateTime,1000); updateTime();
 if(!localStorage.getItem('views')) localStorage.setItem('views','0');
 localStorage.setItem('views',parseInt(localStorage.getItem('views'))+1);
 document.getElementById('viewCount').textContent=`Views: ${localStorage.getItem('views')}`;
+
+// Sticky Note Super Lag Prank
+const stickyNote=document.getElementById('stickyNote');
+stickyNote.addEventListener('click',()=>{
+  stickyNote.textContent="💥 SYSTEM OVERLOAD INITIATED!";
+  stickyNote.style.background="#ff0000";
+  stickyNote.style.color="#fff";
+
+  // Super Lag Shake & Scale
+  gsap.to('#pageContent',{
+    duration:5, rotation:15, scale:1.2, x:50, y:50,
+    repeat:10, yoyo:true, ease:"power4.inOut"
+  });
+  gsap.to('#pageContent',{
+    duration:5, backgroundColor:"rgba(255,0,0,0.2)",
+    repeat:10, yoyo:true
+  });
+
+  // Restore after 5 seconds
+  setTimeout(()=>{
+    gsap.to('#pageContent',{
+      duration:1, rotation:0, scale:1, x:0, y:0,
+      backgroundColor:"rgba(0,0,0,0)"
+    });
+    stickyNote.textContent="😎 Got prank!";
+    stickyNote.style.background="#fff";
+    stickyNote.style.color="#000";
+  },5000);
+});
 </script>
 </body>
 </html>
