@@ -18,7 +18,7 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 .socials{display:flex;gap:15px;margin-top:20px;flex-wrap:wrap;justify-content:center;}
 .social{display:flex;justify-content:center;align-items:center;width:55px;height:55px;border-radius:15px;background:rgba(0,255,204,0.1);border:1px solid rgba(0,255,204,0.3);color:#00ffcc;text-decoration:none;font-size:20px;transition:0.4s;cursor:pointer;}
 .social:hover{transform:scale(1.2) rotate(3deg);box-shadow:0 0 70px #00ffcc;}
-.social img{width:30px;height:30px;}
+.social img{width:30px;height:30px;object-fit:contain;}
 .skill-card{margin:8px;padding:12px;border-radius:15px;background:rgba(0,255,204,0.05);backdrop-filter:blur(15px);transition:0.3s;}
 .skill-card:hover{transform:scale(1.1) rotate(1deg);box-shadow:0 0 50px #00ffcc;}
 #chat{height:150px;overflow:auto;margin-bottom:10px;padding:12px;border-radius:15px;background:rgba(0,255,204,0.05);}
@@ -98,9 +98,5 @@ const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio
 bgMusic.loop=true;
 bgMusic.volume=0.25;
 bgMusic.play();
-
-// Hover Sounds
-const hoverSound=new Audio('https://freesound.org/data/previews/331/331912_3248244-lq.mp3');
-document.querySelectorAll('.social, .nav a').forEach(el=>{el.addEventListener('mouseenter',()=>{hoverSound.currentTime=0;hoverSound.play();});});
 </script></body>
 </html>
