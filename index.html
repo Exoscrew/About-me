@@ -14,17 +14,16 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
 .hud{position:fixed;width:100%;display:flex;justify-content:space-between;padding:15px;font-family:'Orbitron';font-weight:700;z-index:10;}
 .hud .time-date{font-size:clamp(0.8rem,2vw,1.2rem);}
 .hud .views{font-size:clamp(0.8rem,2vw,1.2rem);}
-.container{max-width:900px;width:90%;margin:0 auto;padding:60px 0;display:flex;flex-direction:column;gap:60px;position:relative;z-index:5;}
-.section{padding:20px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 50px rgba(255,255,255,0.2);text-align:center;opacity:1;cursor:default;transition:0.5s;}
-.section h1{font-family:'Orbitron';font-size:clamp(2rem,5vw,3rem);margin-bottom:15px;text-shadow:0 0 15px #fff,0 0 30px #fff;}
-.skill-card{display:inline-block;margin:5px;padding:10px 15px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:0.3s;}
-.skill-card:hover{background:rgba(255,255,255,0.1);}
-.socials{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
-.social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;text-decoration:none;font-size:16px;transition:0.4s;}
-.social img{width:32px;height:32px;margin-bottom:5px;}
+.container{max-width:1000px;width:90%;margin:0 auto;padding:60px 0;display:flex;flex-direction:column;gap:60px;position:relative;z-index:5;}
+.section{padding:30px;border-radius:25px;background:rgba(255,255,255,0.05);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 60px rgba(255,255,255,0.2);text-align:center;opacity:1;transition:0.5s;}
+.section h1{font-family:'Orbitron';font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:20px;text-shadow:0 0 15px #fff,0 0 40px #fff;}
+.skill-card{display:inline-block;margin:8px;padding:12px 20px;border-radius:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:0.3s;}
+.skill-card:hover{background:rgba(255,255,255,0.12);}
+.socials{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+.social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;text-decoration:none;font-size:16px;transition:0.4s;}
+.social img{width:36px;height:36px;margin-bottom:5px;}
 #chat{height:150px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);}
-#chatInput{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.1);color:#fff;}
-.ninja{position:fixed;width:50px;height:50px;background:url('https://i.ibb.co/Zd7B1Qs/ninja.png') no-repeat center/contain;z-index:9999;display:none;}
+#chatInput{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.1);color:#fff;}
 </style>
 </head>
 <body>
@@ -70,8 +69,6 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
 
   <div class="section hero"><h1>Thanks for visiting!</h1><h1 class="signature">🕊</h1></div>
 </div>
-
-<div class="ninja" id="ninja"></div>
 
 <script>
 // === Three.js Space + Jets + Lasers ===
@@ -181,38 +178,6 @@ document.getElementById('viewCount').textContent=`Views: ${localStorage.getItem(
 // Background Music
 const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e2f9a79d0.mp3?filename=cosmic-ambient-110728.mp3');
 bgMusic.loop=true; bgMusic.volume=0.2; bgMusic.play();
-
-// === Ninja Cinematic ===
-const ninja = document.getElementById('ninja');
-const pageContent = document.getElementById('pageContent');
-setTimeout(()=>{
-  ninja.style.display='block';
-  let posX=Math.random()*window.innerWidth-50;
-  let posY=Math.random()*window.innerHeight-50;
-  ninja.style.left=posX+'px';
-  ninja.style.top=posY+'px';
-
-  // Random wandering
-  const wander = setInterval(()=>{
-    posX=Math.random()*(window.innerWidth-50);
-    posY=Math.random()*(window.innerHeight-50);
-    gsap.to(ninja,{x:posX,y:posY,duration:1.5,ease:'power1.inOut'});
-  },1800);
-
-  // Slice effect
-  setTimeout(()=>{
-    clearInterval(wander);
-    gsap.to(pageContent,{clipPath:'polygon(0 0, 100% 0, 100% 50%, 0 50%)',duration:1});
-  },3000);
-
-  // Burn/Tear effect
-  setTimeout(()=>{
-    gsap.to(pageContent,{opacity:0,duration:2,ease:'power2.in',onComplete:()=>{
-      // Crash effect (simulate object)
-      gsap.fromTo(pageContent,{scale:0.5,rotation:45},{scale:1,rotation:0,opacity:1,duration:2,ease:'elastic.out(1,0.5)'});
-    }});
-  },8000);
-},10000);
 </script>
 </body>
 </html>
