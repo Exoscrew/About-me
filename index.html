@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exoscrew — About Me</title>
+<title>Exoscrew — FORCE15 Sigma Interactive</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -10,10 +10,10 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#050505;color:#00ffcc;font-family:'Inter';overflow-x:hidden;scroll-behavior:smooth;}
+body{background:linear-gradient(135deg,#0a0a0a,#111111);color:#00ffcc;font-family:'Inter';overflow-x:hidden;scroll-behavior:smooth;}
 canvas{position:fixed;top:0;left:0;z-index:-1;}
-.section{min-height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:20px;opacity:0;transform:translateY(50px);}
-.card{max-width:90%;margin:20px auto;padding:25px;border-radius:25px;background:rgba(255,255,255,0.05);backdrop-filter:blur(25px);border:1px solid rgba(0,255,204,0.2);box-shadow:0 0 40px rgba(0,255,204,0.1);transition:0.8s;}
+.section{min-height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:20px;opacity:0;transform:translateY(50px);background:rgba(0,0,0,0.2);border-radius:25px;margin:20px;}
+.card{max-width:90%;margin:20px auto;padding:25px;border-radius:25px;background:rgba(10,10,10,0.6);backdrop-filter:blur(25px);border:1px solid rgba(0,255,204,0.5);box-shadow:0 0 50px rgba(0,255,204,0.3);transition:0.8s;}
 .hero h1, .signature h1{font-family:'Orbitron';font-size:3rem;text-shadow:0 0 25px #00ffcc;margin-bottom:15px;text-align:center;}
 .socials{display:flex;gap:15px;margin-top:20px;flex-wrap:wrap;justify-content:center;}
 .social{display:flex;align-items:center;gap:10px;padding:14px;border-radius:18px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,204,0.2);color:#00ffcc;text-decoration:none;font-size:15px;flex:1 1 40%;transition:0.35s;}
@@ -25,12 +25,11 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 .social.ig:hover{color:#e4405f;box-shadow:0 0 60px #e4405f;}
 .skill-card{margin:10px;padding:15px;border-radius:15px;background:rgba(0,255,204,0.1);backdrop-filter:blur(15px);transition:0.3s;}
 .skill-card:hover{transform:scale(1.15) rotate(2deg);box-shadow:0 0 35px #00ffcc;}
-#chat{height:160px;overflow:auto;margin-bottom:10px;padding:12px;border-radius:15px;background:rgba(0,0,0,0.2);}
+#chat{height:160px;overflow:auto;margin-bottom:10px;padding:12px;border-radius:15px;background:rgba(0,0,0,0.3);}
 input{width:100%;padding:12px;background:rgba(0,0,0,0.2);color:#00ffcc;border:1px solid #00ffcc;outline:none;border-radius:15px;}
 #secret{display:none;text-align:center;color:red;margin:40px;font-size:1.3rem;}
 #hiddenPage{display:none;text-align:center;color:#ff00ff;margin:40px;font-size:1.5rem;}
-#intro{display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;position:fixed;inset:0;width:100%;z-index:9999;background:#050505;}
-#outro{display:none;justify-content:center;align-items:center;height:100vh;flex-direction:column;position:fixed;inset:0;width:100%;z-index:9999;background:#050505;}
+#intro, #outro{display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;position:fixed;inset:0;width:100%;z-index:9999;background:#050505;}
 #outro h1{color:#00ffcc;font-size:4rem;text-shadow:0 0 50px #00ffcc;}
 .nav{position:fixed;top:15px;right:25px;z-index:1000;display:flex;gap:15px;}
 .nav a{color:#00ffcc;text-decoration:none;font-weight:500;padding:10px 15px;border-radius:15px;background:rgba(0,255,204,0.05);backdrop-filter:blur(15px);transition:0.5s;}
@@ -144,4 +143,4 @@ const hoverSound=document.getElementById("hoverSound"); gsap.utils.toArray(".soc
 function triggerOutro(){document.getElementById("main").style.display="none"; const outro=document.getElementById("outro"); outro.style.display="flex"; document.getElementById("outroSound").play(); const outroCanvas=document.getElementById("outroCanvas"); outroCanvas.width=window.innerWidth; outroCanvas.height=window.innerHeight; const octx=outroCanvas.getContext('2d'); let oParticles=[]; for(let i=0;i<600;i++){oParticles.push({x:window.innerWidth/2,y:window.innerHeight/2,r:Math.random()*3+1,dx:(Math.random()-0.5)*10,dy:(Math.random()-0.5)10});} function animateOutro(){octx.clearRect(0,0,window.innerWidth,window.innerHeight);oParticles.forEach(p=>{p.x+=p.dx;p.y+=p.dy;octx.beginPath();octx.arc(p.x,p.y,p.r,0,Math.PI2);octx.fillStyle="#00ffcc";octx.fill();}); requestAnimationFrame(animateOutro);} animateOutro(); gsap.to("#outro h1",{scale:1.6,opacity:1,duration:2,ease:"elastic.out(1,0.5)"});} setTimeout(triggerOutro,120000); </script>
 
 </body>
-</html>
+  </html>
