@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Inter';color:#fff;background:#000;overflow-x:hidden;}
@@ -37,9 +39,8 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
 .social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;text-decoration:none;font-size:16px;transition:0.4s;text-shadow:0 0 5px #fff;}
 .social img{width:36px;height:36px;margin-bottom:5px;filter:drop-shadow(0 0 5px #0ff);}
 .social:hover{background: rgba(0,255,255,0.12); box-shadow:0 0 20px #0ff,0 0 50px #0ff; transform:scale(1.1);}
-#chat{height:150px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);color:#fff;text-shadow:0 0 5px #fff;}
+#chat{height:200px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);color:#fff;text-shadow:0 0 5px #fff;}
 #chatInput{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.1);color:#fff;text-shadow:0 0 5px #fff;}
-#stickyNote{position:fixed;bottom:20px;right:20px;background:#fff;color:#000;padding:15px 20px;border-radius:10px;box-shadow:0 0 20px #fff;cursor:pointer;font-family:'Orbitron';z-index:15;text-align:center;}
 .signature{text-shadow:0 0 10px #0ff,0 0 40px #fff,0 0 80px #0ff;}
 </style>
 </head>
@@ -65,15 +66,15 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
     <div class="skill-card" onclick="window.open('https://developer.mozilla.org/en-US/docs/Web/HTML','_blank')">HTML</div>
     <div class="skill-card" onclick="window.open('https://www.python.org/','_blank')">Python</div>
     <div class="skill-card" onclick="window.open('https://www.java.com/','_blank')">Java</div>
-    <div class="skill-card" onclick="window.open('https://isocpp.org/','_blank')">C+</div>
+    <div class="skill-card" onclick="window.open('https://isocpp.org/','_blank')">C++</div>
     <div class="skill-card" onclick="window.open('https://learn.microsoft.com/en-us/dotnet/csharp/','_blank')">C#</div>
   </div>
 
   <div class="section socials">
-    <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">YT</a>
+    <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
     <a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
     <a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968871.png" alt="Twitch">Twitch</a>
-    <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Instagram</a>
+    <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Insta</a>
   </div>
 
   <div class="section"><h1 class="signature">エクソスクリュー</h1></div>
@@ -84,13 +85,11 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
     <input type="text" placeholder="Type your message..." id="chatInput">
   </div>
 
-  <div class="section hero"><h1>Thanks for visiting!</h1><h1 class="signature">🕊</h1></div>
+  <div class="section hero"><h1>Thanks for visiting! 🕊</h1><h1 class="signature">エクソスクリュー</h1></div>
 </div>
 
-<div id="stickyNote">⚠ Click me if you dare!</div>
-
 <script>
-// === Three.js Space + Jets + Crystal Particles ===
+// === Three.js Space Scene ===
 const canvas=document.getElementById('space');
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
@@ -142,10 +141,45 @@ function shootLaser(jet){
   lasers.push({mesh:laser,speed:3});
 }
 
+// Majestic Kite
+const kiteGeo=new THREE.ConeGeometry(3,6,4);
+const kiteMat=new THREE.MeshBasicMaterial({color:0x00ffff});
+const kite=new THREE.Mesh(kiteGeo,kiteMat);
+kite.rotation.x=Math.PI;
+kite.position.set(0,200,-50);
+scene.add(kite);
+
+// Comet-style Kite Trail
+const trailGeo = new THREE.BufferGeometry();
+const trailLength = 400;
+const trailPositions = new Float32Array(trailLength * 3);
+const trailAlphas = new Float32Array(trailLength);
+trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPositions, 3));
+trailGeo.setAttribute('alpha', new THREE.BufferAttribute(trailAlphas, 1));
+const trailMat = new THREE.PointsMaterial({color:0x00ffff,size:2,transparent:true,opacity:1});
+const trail = new THREE.Points(trailGeo, trailMat);
+scene.add(trail);
+
+function updateTrail() {
+  for(let i=0;i<trailLength-1;i++){
+    trailPositions[i*3]=trailPositions[(i+1)*3];
+    trailPositions[i*3+1]=trailPositions[(i+1)*3+1];
+    trailPositions[i*3+2]=trailPositions[(i+1)*3+2];
+    trailAlphas[i]=trailAlphas[i+1]*0.95;
+  }
+  const last=trailLength-1;
+  trailPositions[last*3]=kite.position.x+(Math.random()-0.5)*0.5;
+  trailPositions[last*3+1]=kite.position.y+(Math.random()-0.5)*0.5;
+  trailPositions[last*3+2]=kite.position.z+(Math.random()-0.5)*0.5;
+  trailAlphas[last]=1;
+  trail.geometry.attributes.position.needsUpdate=true;
+}
+
 // Animate
 camera.position.z=150;
 function animate(){
   requestAnimationFrame(animate);
+  
   stars.rotation.y+=0.0015;
   crystals.rotation.y += 0.0005;
   crystals.material.opacity = 0.3 + Math.sin(Date.now()*0.005)*0.2;
@@ -162,35 +196,20 @@ function animate(){
     if(l.mesh.position.x>300){ scene.remove(l.mesh); lasers.splice(i,1);}
   });
 
+  if(kite.position.y>10){ kite.position.y -= 0.4; kite.rotation.z += 0.02;} else kite.position.y=10;
+  updateTrail();
+
   renderer.render(scene,camera);
 }
 animate();
 
-// GSAP Fade-in Sections
+// Fade-in Sections
 gsap.utils.toArray('.section').forEach((s,i)=>{
   gsap.to(s,{opacity:1,duration:1.5,delay:i*0.4,ease:'power2.out'});
 });
 
-// Chat
-const chat=document.getElementById('chat');
-const input=document.getElementById('chatInput');
-if(input){input.addEventListener('keypress',e=>{
-  if(e.key==='Enter' && input.value.trim()!==''){
-    const msg=document.createElement('div'); msg.textContent='You: '+input.value;
-    chat.appendChild(msg);
-    const reply=document.createElement('div'); reply.textContent='Message received!';
-    chat.appendChild(reply);
-    input.value=''; chat.scrollTop=chat.scrollHeight;
-  }
-});}
-
 // Time & Date
-function updateTime(){
-  const now=new Date();
-  const time=now.toLocaleTimeString();
-  const date=now.toLocaleDateString();
-  document.getElementById('timeDate').textContent=`${time} | ${date}`;
-}
+function updateTime(){const now=new Date();const time=now.toLocaleTimeString();const date=now.toLocaleDateString();document.getElementById('timeDate').textContent=`${time} | ${date}`;}
 setInterval(updateTime,1000); updateTime();
 
 // View Count
@@ -198,55 +217,26 @@ if(!localStorage.getItem('views')) localStorage.setItem('views','0');
 localStorage.setItem('views',parseInt(localStorage.getItem('views'))+1);
 document.getElementById('viewCount').textContent=`Views: ${localStorage.getItem('views')}`;
 
-// Sticky Note Super Lag Prank
-const stickyNote=document.getElementById('stickyNote');
-stickyNote.addEventListener('click',()=>{
-  stickyNote.textContent="💥 SYSTEM OVERLOAD INITIATED!";
-  stickyNote.style.background="#ff0000";
-  stickyNote.style.color="#fff";
+// Firebase Chat
+const firebaseConfig={apiKey:"YOUR_API_KEY",authDomain:"YOUR_PROJECT_ID.firebaseapp.com",databaseURL:"https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",projectId:"YOUR_PROJECT_ID",storageBucket:"YOUR_PROJECT_ID.appspot.com",messagingSenderId:"YOUR_SENDER_ID",appId:"YOUR_APP_ID"};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+const chatBox=document.getElementById('chat');
+const chatInput=document.getElementById('chatInput');
 
-  const content = document.getElementById('pageContent');
+function sendMessage(msg){db.ref('globalChat').push().set({text:msg,timestamp:Date.now()});}
 
-  // Simulate explosion: sections fly, rotate, scale, blur
-  gsap.to(content, {
-    duration: 0.1,
-    rotation: "+=5",
-    x: "+=20",
-    y: "+=20",
-    repeat: 50,
-    yoyo: true,
-    ease: "power4.inOut",
-    onUpdate: () => {
-      content.style.filter = `blur(${Math.random()*8}px) brightness(${0.7+Math.random()*0.6})`;
-    }
-  });
+db.ref('globalChat').on('child_added', snapshot=>{
+  const msgData=snapshot.val();
+  const msgDiv=document.createElement('div');
+  const date=new Date(msgData.timestamp).toLocaleTimeString();
+  msgDiv.textContent=`[${date}] ${msgData.text}`;
+  chatBox.appendChild(msgDiv);
+  chatBox.scrollTop=chatBox.scrollHeight;
+});
 
-  // Create fake particles (like debris)
-  const debris = [];
-  for(let i=0; i<50; i++){
-    const div = document.createElement('div');
-    div.style.position = 'fixed';
-    div.style.width = div.style.height = Math.random()*8 + 4 + 'px';
-    div.style.background = `hsl(${Math.random()*360},100%,50%)`;
-    div.style.left = Math.random()*window.innerWidth + 'px';
-    div.style.top = Math.random()*window.innerHeight + 'px';
-    div.style.zIndex = 1000;
-    div.style.borderRadius = "50%";
-    document.body.appendChild(div);
-    debris.push(div);
-    gsap.to(div, {duration:5, x:(Math.random()-0.5)*1000, y:(Math.random()-0.5)*1000, rotation:360*Math.random(), opacity:0, ease:"power2.out"});
-  }
-
-  // Restore after 5.5s
-  setTimeout(() => {
-    gsap.killTweensOf(content);
-    content.style.transform = '';
-    content.style.filter = '';
-    debris.forEach(d => document.body.removeChild(d));
-    stickyNote.textContent = "😎 Got prank!";
-    stickyNote.style.background = "#fff";
-    stickyNote.style.color = "#000";
-  }, 5500);
+chatInput.addEventListener('keypress',e=>{
+  if(e.key==='Enter' && chatInput.value.trim()!==''){sendMessage(chatInput.value);chatInput.value='';}
 });
 </script>
 </body>
