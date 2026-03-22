@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter';color:#00ffcc;background:#000;}
+body{font-family:'Inter';color:#00ffcc;background:#000;overflow-x:hidden;}
 canvas{position:fixed;top:0;left:0;z-index:-1;}
 .container{max-width:900px;width:90%;margin:0 auto;padding:40px;display:flex;flex-direction:column;gap:60px;}
 .section{padding:20px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(0,255,204,0.3);box-shadow:0 0 50px rgba(0,255,204,0.5);text-align:center;}
@@ -35,7 +35,7 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 </div><!-- Socials --><div class="section socials">
 <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
 <a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
-<a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Twitch">Twitch</a>
+<a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111653.png" alt="Twitch">Twitch</a>
 <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384064.png" alt="Instagram">Insta</a>
 </div><!-- Signature --><div class="section">
 <h1 class="signature">エクソスクリュー</h1>
@@ -45,7 +45,7 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 <input type="text" placeholder="Type your message..." id="chatInput">
 </div><!-- Outro --><div class="section hero">
 <h1>Thanks for visiting!</h1>
-<h1 class="signature">エクソスクリュー</h1>
+<h1 class="signature">🕊</h1>
 </div></div><script>
 // Particle Background
 const canvas=document.getElementById('particles');
@@ -54,6 +54,8 @@ const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
+
+// Particle stars
 const particlesCount=1200;
 const geometry=new THREE.BufferGeometry();
 const positions=new Float32Array(particlesCount*3);
@@ -62,8 +64,31 @@ geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
 const material=new THREE.PointsMaterial({color:0x00ffcc,size:1.8});
 const particles=new THREE.Points(geometry,material);
 scene.add(particles);
+
+// Fighter Jets
+const jetGeometry=new THREE.ConeGeometry(1,3,4);
+const jetMaterial=new THREE.MeshBasicMaterial({color:0xff0000});
+const jets=[];
+for(let i=0;i<5;i++){
+  const jet=new THREE.Mesh(jetGeometry,jetMaterial);
+  jet.position.set(Math.random()*200-100,Math.random()*100-50,Math.random()*200-100);
+  jet.rotation.x=Math.PI/2;
+  scene.add(jet);
+  jets.push({mesh:jet, speed:0.5+Math.random()});
+}
+
 camera.position.z=120;
-function animate(){requestAnimationFrame(animate);particles.rotation.y+=0.0015;renderer.render(scene,camera);}
+
+function animate(){
+  requestAnimationFrame(animate);
+  particles.rotation.y+=0.0015;
+  jets.forEach(j=>{
+    j.mesh.position.x+=j.speed;
+    j.mesh.position.y=Math.sin(j.mesh.position.x/20)*20;
+    if(j.mesh.position.x>150) j.mesh.position.x=-150;
+  });
+  renderer.render(scene,camera);
+}
 animate();
 
 // Contact Chat Simulation
