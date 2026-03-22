@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exoscrew</title>
+<title>Exoscrew — FORCE6 GOD MODE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 
@@ -14,175 +14,31 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-background:#050505;
-color:#00ffcc;
-font-family:'Inter';
-overflow:hidden;
-}
-
-/* cursor */
-.cursor{
-position:fixed;
-width:12px;height:12px;
-border-radius:50%;
-background:#00ffcc;
-pointer-events:none;
-z-index:999;
-transform:translate(-50%,-50%);
-box-shadow:0 0 15px #00ffcc;
-}
-
-/* intro */
-#intro{
-position:fixed;inset:0;
-background:black;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:9999;
-}
-#logo{
-font-family:'Orbitron';
-font-size:3rem;
-letter-spacing:4px;
-}
-
-/* main */
-#main{display:none;height:100vh;overflow-y:auto}
-
-/* hero */
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-}
-.hero h1{
-font-family:'Orbitron';
-font-size:3rem;
-}
-
-/* section */
-.section{
-padding:80px 20px;
-opacity:0;
-}
-
-/* glass card */
-.card{
-max-width:500px;
-margin:20px auto;
-padding:25px;
-border-radius:20px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(15px);
-border:1px solid rgba(0,255,204,0.2);
-transition:0.4s;
-}
-.card:hover{
-transform:translateY(-10px) scale(1.02);
-box-shadow:0 0 40px rgba(0,255,204,0.4);
-}
-
-/* socials */
-.socials{
-display:flex;
-flex-direction:column;
-gap:20px;
-margin-top:20px;
-}
-
-.social{
-display:flex;
-align-items:center;
-gap:15px;
-padding:15px;
-border-radius:15px;
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(0,255,204,0.2);
-text-decoration:none;
-color:#00ffcc;
-transition:0.4s;
-position:relative;
-overflow:hidden;
-animation:float 3s ease-in-out infinite;
-}
-
-.social i{
-width:28px;height:28px;
-}
-
-/* floating */
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-6px)}
-100%{transform:translateY(0)}
-}
-
-/* hover */
-.social:hover{
-transform:scale(1.06);
-box-shadow:0 0 30px rgba(0,255,204,0.6);
-}
-
-/* glow */
-.social.yt:hover{
-color:red;
-box-shadow:0 0 30px red;
-}
-.social.tg:hover{
-color:#00aaff;
-box-shadow:0 0 30px #00aaff;
-}
-
-/* shine */
-.social::before{
-content:"";
-position:absolute;
-top:0;left:-100%;
-width:100%;height:100%;
-background:linear-gradient(120deg,transparent,rgba(255,255,255,0.2),transparent);
-transition:0.6s;
-}
-.social:hover::before{
-left:100%;
-}
-
-/* AI */
-#chat{height:150px;overflow:auto;margin-bottom:10px}
-input{
-width:100%;
-padding:12px;
-background:black;
-color:#00ffcc;
-border:1px solid #00ffcc;
-outline:none;
-}
-
-/* secret */
-#secret{
-display:none;
-text-align:center;
-color:red;
-margin:40px;
-}
-
-/* matrix mode */
-.matrix{
-background:black;
-color:#00ff00 !important;
-}
-
-/* canvas */
-canvas{
-position:fixed;
-top:0;left:0;
-z-index:-1;
-}
+body{background:#050505;color:#00ffcc;font-family:'Inter';overflow:hidden;}
+.cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:#00ffcc;pointer-events:none;z-index:999;transform:translate(-50%,-50%);box-shadow:0 0 15px #00ffcc;}
+.trail{position:fixed;width:6px;height:6px;background:#00ffcc;border-radius:50%;pointer-events:none;opacity:0.6;z-index:999;animation:fade 0.6s linear forwards;}
+@keyframes fade{to{opacity:0;transform:scale(0)}}
+#intro{position:fixed;inset:0;background:black;display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:9999;}
+#logo{font-family:'Orbitron';font-size:3rem;color:#00ffcc;letter-spacing:4px;}
+#main{display:none;height:100vh;overflow-y:auto;}
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.hero h1{font-family:'Orbitron';font-size:3rem;}
+.section{padding:80px 20px;opacity:0;}
+.card{max-width:520px;margin:20px auto;padding:25px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(0,255,204,0.2);transition:0.4s;}
+.card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 0 40px rgba(0,255,204,0.4);}
+.socials{display:flex;gap:15px;margin-top:20px;flex-wrap:wrap;}
+.social{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,204,0.2);color:#00ffcc;text-decoration:none;transition:0.4s;animation:float 3s ease-in-out infinite;}
+.social i{width:22px;height:22px;}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-5px)}100%{transform:translateY(0)}}
+.social:hover{transform:scale(1.1);box-shadow:0 0 25px #00ffcc;}
+.social.yt:hover{color:red;box-shadow:0 0 25px red;}
+.social.tg:hover{color:#00aaff;box-shadow:0 0 25px #00aaff;}
+#chat{height:150px;overflow:auto;margin-bottom:10px;}
+input{width:100%;padding:12px;background:black;color:#00ffcc;border:1px solid #00ffcc;outline:none;}
+#secret{display:none;text-align:center;color:red;margin:40px;}
+canvas{position:fixed;top:0;left:0;z-index:-1;}
+#gameCanvas{width:100%;height:400px;background:black;display:block;margin:auto;border:1px solid #00ffcc;border-radius:15px;}
+#terminal{display:none;position:fixed;inset:0;background:black;color:#00ff00;font-family:monospace;padding:20px;z-index:99999;overflow:auto;}
 </style>
 </head>
 
@@ -196,7 +52,6 @@ z-index:-1;
 <p id="boot"></p>
 </div>
 
-<!-- MAIN -->
 <div id="main">
 
 <section class="hero">
@@ -204,179 +59,113 @@ z-index:-1;
 <p>Creator • Developer • System Thinker</p>
 </section>
 
+<!-- ABOUT + SOCIALS -->
 <section class="section">
 <div class="card">
 <h2>About Me</h2>
-<p>
-A focused creator driven by precision, logic, and innovation. I design and build clean, efficient, and futuristic digital systems and interactive experiences.
-</p>
-</div>
-</section>
-
-<section class="section">
-<div class="card">
-<h2>Skills</h2>
-<p>HTML • CSS • Python • System Design • Interactive UI</p>
-</div>
-</section>
-
-<section class="section">
-<div class="card">
-<h2>Projects</h2>
-<p>Experimental builds and interactive system-based creations.</p>
-</div>
-</section>
-
-<section class="section">
-<div class="card">
-<h2>Connect</h2>
+<p>Focused, disciplined, and driven by precision. I build systems and experiences with clarity, structure, and intent.</p>
+<p>Skills: <strong>HTML • Python • Java • C+ • C#</strong></p>
 
 <div class="socials">
-
-<a href="https://www.youtube.com/@EXOSCREW" target="_blank" class="social yt">
-<i data-lucide="youtube"></i>
-<span>YouTube</span>
-</a>
-
-<a href="https://t.me/exoscrew" target="_blank" class="social tg">
-<i data-lucide="send"></i>
-<span>Telegram</span>
-</a>
-
+<a href="https://www.youtube.com/@EXOSCREW" target="_blank" class="social yt"><i data-lucide="youtube"></i> YouTube</a>
+<a href="https://t.me/exoscrew" target="_blank" class="social tg"><i data-lucide="send"></i> Telegram</a>
 </div>
-
 </div>
 </section>
 
+<!-- AI -->
 <section class="section">
 <div class="card">
-<h2>AI Assistant</h2>
+<h2>AI Personality System</h2>
 <div id="chat"></div>
-<input id="input" placeholder="Ask about me..." onkeydown="ai(event)">
+<input placeholder="Ask about me..." onkeydown="ai(event)">
 </div>
 </section>
 
-<section id="secret">
-<h2>Hidden Layer Accessed</h2>
-<p>You found the hidden system.</p>
+<!-- MINI-GAME -->
+<section class="section">
+<div class="card">
+<h2>Mini Game</h2>
+<canvas id="gameCanvas"></canvas>
+<p style="text-align:center;">Use arrow keys to move, space to shoot.</p>
+</div>
 </section>
 
+</div>
+
+<div id="secret">
+<h2>Hidden Layer Accessed</h2>
+<p>You unlocked FORCE6 secrets.</p>
 </div>
 
 <canvas id="bg"></canvas>
+<div id="terminal"></div>
 
 <script>
-
-/* cursor */
+/* Cursor */
 const cursor=document.getElementById("cursor");
 document.addEventListener("mousemove",e=>{
 cursor.style.left=e.clientX+"px";
 cursor.style.top=e.clientY+"px";
+let t=document.createElement("div");t.className="trail";
+t.style.left=e.clientX+"px";t.style.top=e.clientY+"px";
+document.body.appendChild(t);setTimeout(()=>t.remove(),600);
 });
 
-/* intro typing */
+/* Intro */
 const lines=["Initializing...","Loading Profile...","Welcome"];
 let i=0,j=0;
 const boot=document.getElementById("boot");
-
-function type(){
-if(i<lines.length){
-if(j<lines[i].length){
-boot.innerHTML+=lines[i][j++];
-setTimeout(type,25);
-}else{
-boot.innerHTML+="<br>";
-i++;j=0;
-setTimeout(type,300);
-}
-}else setTimeout(start,800);
-}
+function type(){if(i<lines.length){if(j<lines[i].length){boot.innerHTML+=lines[i][j++];setTimeout(type,25);}else{boot.innerHTML+="<br>";i++;j=0;setTimeout(type,300);}}else setTimeout(start,800);} 
 type();
-
-/* start */
-function start(){
-gsap.to("#intro",{opacity:0,duration:1.2,onComplete:()=>{
-intro.style.display="none";
-main.style.display="block";
-document.body.style.overflow="auto";
-
-gsap.utils.toArray(".section").forEach(sec=>{
-gsap.fromTo(sec,{y:80,opacity:0},{
-y:0,opacity:1,duration:1,
-scrollTrigger:{trigger:sec,start:"top 85%"}
-});
-});
-}});
-}
+function start(){intro.style.display="none";main.style.display="block";document.body.style.overflow="auto";gsap.utils.toArray(".section").forEach(sec=>{gsap.fromTo(sec,{y:80,opacity:0},{y:0,opacity:1,duration:1,scrollTrigger:{trigger:sec,start:"top 85%"}});});}
 
 /* AI */
 const chat=document.getElementById("chat");
-
-function log(t){
-chat.innerHTML+="<div>> "+t+"</div>";
-chat.scrollTop=chat.scrollHeight;
-}
-
-function ai(e){
-if(e.key==="Enter"){
-let q=e.target.value.toLowerCase();
-log(q);
-
-if(q.includes("who")) log("A focused creator and system thinker.");
-else if(q.includes("skills")) log("HTML, CSS, Python, system design.");
-else if(q.includes("projects")) log("Interactive system builds.");
-else if(q.includes("goal")) log("To build efficient advanced systems.");
-else if(q.includes("hello")) log("Hello. State your query.");
-
+function log(t){chat.innerHTML+="<div>> "+t+"</div>";chat.scrollTop=chat.scrollHeight;}
+function ai(e){if(e.key==="Enter"){let q=e.target.value.toLowerCase();log(q);
+if(q.includes("who")) log("Focused creator and system thinker.");
+else if(q.includes("skills")) log("HTML, Python, Java, C+, C#.");
 else if(q==="unlock") document.getElementById("secret").style.display="block";
 else if(q==="matrix") document.body.classList.toggle("matrix");
-else if(q==="clear") chat.innerHTML="";
+else log("Refine your query.");e.target.value="";}}
 
-else log("Refine your query.");
-
-e.target.value="";
-}
-}
-
-/* 3D background */
-const canvas=document.getElementById("bg");
+/* 3D BG */
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
-const renderer=new THREE.WebGLRenderer({canvas,alpha:true});
+const renderer=new THREE.WebGLRenderer({canvas:bg,alpha:true});
 renderer.setSize(innerWidth,innerHeight);
-
-const geometry=new THREE.BufferGeometry();
-const vertices=[];
-for(let i=0;i<1500;i++){
-vertices.push((Math.random()-0.5)*10,(Math.random()-0.5)*10,(Math.random()-0.5)*10);
-}
-geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
-
-const material=new THREE.PointsMaterial({color:0x00ffcc,size:0.02});
-const points=new THREE.Points(geometry,material);
-scene.add(points);
-
-camera.position.z=3;
-
-let mouseX=0,mouseY=0;
-document.addEventListener("mousemove",e=>{
-mouseX=(e.clientX/window.innerWidth-0.5);
-mouseY=(e.clientY/window.innerHeight-0.5);
-});
-
-function animate(){
-requestAnimationFrame(animate);
-points.rotation.y+=0.001;
-points.rotation.x+=mouseY*0.002;
-points.rotation.y+=mouseX*0.002;
-renderer.render(scene,camera);
-}
+const geo=new THREE.BufferGeometry();
+let verts=[];
+for(let k=0;k<1500;k++){verts.push((Math.random()-0.5)*10,(Math.random()-0.5)*10,(Math.random()-0.5)*10);}
+geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));
+const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0x00ffcc,size:0.02}));
+scene.add(pts);camera.position.z=3;
+function animate(){requestAnimationFrame(animate);pts.rotation.y+=0.001;renderer.render(scene,camera);}
 animate();
 
-/* icons */
+/* Icons */
 lucide.createIcons();
 
+/* MINI-GAME */
+const gameCanvas=document.getElementById("gameCanvas");
+const gctx=gameCanvas.getContext("2d");
+let ship={x:200,y:350,w:20,h:20};
+let bullets=[];
+let keys={};
+document.addEventListener("keydown",e=>keys[e.key]=true);
+document.addEventListener("keyup",e=>keys[e.key]=false);
+function gameLoop(){
+gctx.clearRect(0,0,gameCanvas.width,gameCanvas.height);
+gctx.fillStyle="#00ffcc";gctx.fillRect(ship.x,ship.y,ship.w,ship.h);
+bullets.forEach(b=>{b.y-=5;gctx.fillRect(b.x,b.y,4,10);});
+bullets=bullets.filter(b=>b.y>0);
+if(keys.ArrowLeft) ship.x-=4;if(keys.ArrowRight) ship.x+=4;if(keys.ArrowUp) ship.y-=4;if(keys.ArrowDown) ship.y+=4;
+if(keys[" "]){if(!ship.shootCooldown){bullets.push({x:ship.x+ship.w/2-2,y:ship.y});ship.shootCooldown=10;}} 
+if(ship.shootCooldown>0) ship.shootCooldown--;
+requestAnimationFrame(gameLoop);}
+gameLoop();
 </script>
 
 </body>
-  </html>
+</html>
