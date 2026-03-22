@@ -11,59 +11,60 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{overflow-x:hidden;scroll-behavior:smooth;font-family:'Inter';color:#00ffcc;background:#000;}
 canvas{position:fixed;top:0;left:0;z-index:-1;}
-.section{min-height:auto;max-width:90%;width:90%;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:15px;opacity:0;transform:translateY(20px);background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border-radius:15px;margin:15px auto;box-shadow:0 0 30px rgba(0,255,204,0.4);transition:1s;}
-.card{max-width:700px;margin:20px auto;padding:20px;border-radius:20px;background:rgba(255,255,255,0.1);backdrop-filter:blur(25px);border:1px solid rgba(0,255,204,0.3);box-shadow:0 0 50px rgba(0,255,204,0.6);transition:0.8s;}
-.hero h1, .signature h1{font-family:'Orbitron';font-size:clamp(2rem,5vw,3rem);text-shadow:0 0 35px #00ffcc,0 0 55px #00ffaa;margin-bottom:15px;text-align:center;}
-.hero p, .card p{font-size:clamp(0.9rem,2.5vw,1.2rem);line-height:1.5;text-align:center;}
-.socials{display:flex;gap:15px;margin-top:20px;flex-wrap:wrap;justify-content:center;}
-.social{display:flex;justify-content:center;align-items:center;width:50px;height:50px;border-radius:12px;background:rgba(0,255,204,0.1);border:1px solid rgba(0,255,204,0.3);color:#00ffcc;text-decoration:none;font-size:20px;transition:0.4s;cursor:pointer;}
-.social:hover{transform:scale(1.2) rotate(3deg);box-shadow:0 0 70px #00ffcc;}
-.social img{width:28px;height:28px;object-fit:contain;}
-.skill-card{margin:6px;padding:10px;border-radius:12px;background:rgba(0,255,204,0.05);backdrop-filter:blur(15px);transition:0.3s;}
-.skill-card:hover{transform:scale(1.1) rotate(1deg);box-shadow:0 0 40px #00ffcc;}
-#chat{height:140px;overflow:auto;margin-bottom:10px;padding:10px;border-radius:12px;background:rgba(0,255,204,0.05);}
-input{width:100%;padding:10px;background:rgba(0,255,204,0.05);color:#00ffcc;border:1px solid #00ffcc;outline:none;border-radius:12px;}
-#secret{display:none;text-align:center;color:#ff00ff;margin:30px;font-size:1.2rem;}
-#intro, #outro{display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;position:fixed;inset:0;width:100%;z-index:9999;background:#000;}
-#outro{display:none;}
-#outro h1{color:#00ffcc;font-size:clamp(2.5rem,6vw,4rem);text-shadow:0 0 50px #00ffcc,0 0 80px #00ffaa;}
+.page{height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;opacity:0;}
+.section{max-width:800px;width:90%;padding:20px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(0,255,204,0.3);box-shadow:0 0 50px rgba(0,255,204,0.5);text-align:center;}
+.hero h1, .signature h1{font-family:'Orbitron';font-size:clamp(2rem,5vw,3rem);text-shadow:0 0 35px #00ffcc,0 0 55px #00ffaa;margin-bottom:15px;}
+.socials{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
+.social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:15px;background:rgba(0,255,204,0.1);border:1px solid rgba(0,255,204,0.3);color:#00ffcc;text-decoration:none;font-size:16px;transition:0.4s;cursor:pointer;}
+.social img{width:32px;height:32px;object-fit:contain;margin-bottom:5px;}
 .nav{position:fixed;top:15px;right:20px;z-index:1000;display:flex;gap:15px;flex-wrap:wrap;}
 .nav a{color:#00ffcc;text-decoration:none;font-weight:500;padding:8px 12px;border-radius:12px;background:rgba(0,255,204,0.05);backdrop-filter:blur(15px);transition:0.5s;}
 .nav a:hover{background:rgba(0,255,204,0.2);transform:scale(1.1) rotate(-1deg);}
 </style>
 </head>
-<body><canvas id="particles"></canvas>
-
-<!-- Intro --><div id="intro" class="section hero">
+<body>
+<canvas id="particles"></canvas><!-- Intro Page --><div id="page1" class="page">
+<div class="section hero">
 <h1>Welcome!</h1>
-</div><!-- Navigation --><div class="nav">
-<a href="#about">About Me</a>
-<a href="#skills">Skills</a>
-<a href="#socials">Socials</a>
-<a href="#chatSection">Contact</a>
-</div><!-- About Me --><div id="about" class="section card">
+</div>
+</div><!-- About Me Page --><div id="page2" class="page">
+<div class="section">
 <h1>About Me</h1>
 <p>I’m Exoscrew, male, from India.<br>Skills: HTML • Python • Java • C+ • C#</p>
-</div><!-- Skills --><div id="skills" class="section">
+</div>
+</div><!-- Skills Page --><div id="page3" class="page">
+<div class="section">
+<h1>Skills</h1>
 <div class="skill-card">HTML</div>
 <div class="skill-card">Python</div>
 <div class="skill-card">Java</div>
 <div class="skill-card">C+</div>
 <div class="skill-card">C#</div>
-</div><!-- Socials --><div id="socials" class="section socials">
-<a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
-<a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram"></a>
-<a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Twitch"></a>
-<a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384064.png" alt="Instagram"></a>
-</div><!-- Contact / Message --><div id="chatSection" class="section card">
+</div>
+</div><!-- Socials Page --><div id="page4" class="page">
+<div class="section socials">
+<a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
+<a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
+<a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Twitch">Twitch</a>
+<a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384064.png" alt="Instagram">Insta</a>
+</div>
+</div><!-- Signature Page --><div id="page5" class="page">
+<div class="section">
+<h1 class="signature">エクソスクリュー</h1>
+</div>
+</div><!-- Contact Page --><div id="page6" class="page">
+<div class="section">
 <h1>Contact</h1>
 <div id="chat"></div>
 <input type="text" placeholder="Type your message..." id="chatInput">
-</div><div id="secret">Secret Easter Egg Activated!</div><!-- Outro --><div id="outro" class="section hero">
+</div>
+</div><!-- Outro Page --><div id="page7" class="page">
+<div class="section hero">
 <h1>Thanks for visiting!</h1>
 <h1 class="signature">エクソスクリュー</h1>
+</div>
 </div><script>
-// Cosmic Particles
+// Particle Background
 const canvas=document.getElementById('particles');
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
@@ -82,16 +83,22 @@ camera.position.z=120;
 function animate(){requestAnimationFrame(animate);particles.rotation.y+=0.0015;renderer.render(scene,camera);}
 animate();
 
-// Intro Animation
-gsap.from('#intro h1',{duration:2,opacity:0,y:50,ease:'power3.out',onComplete:()=>{document.getElementById('intro').style.display='none';}});
+// Page Animations
+const pages=document.querySelectorAll('.page');
+let currentPage=0;
+function showPage(index){pages.forEach((p,i)=>{p.style.opacity=i===index?1:0;p.style.pointerEvents=i===index?'auto':'none';});}
+showPage(0);
 
-// Sections fade in on scroll
-gsap.utils.toArray('.section').forEach(section=>{gsap.to(section,{opacity:1,y:0,duration:1,scrollTrigger:{trigger:section, start:'top 80%'}});});
+document.addEventListener('keydown',e=>{
+if(e.key==='ArrowDown'){currentPage=Math.min(currentPage+1,pages.length-1);showPage(currentPage);}
+if(e.key==='ArrowUp'){currentPage=Math.max(currentPage-1,0);showPage(currentPage);}
+});
 
 // Contact Message Simulation
 const chat=document.getElementById('chat');
 const input=document.getElementById('chatInput');
-input.addEventListener('keypress',e=>{if(e.key==='Enter' && input.value.trim()!==''){const msg=document.createElement('div');msg.textContent='You: '+input.value;chat.appendChild(msg);const reply=document.createElement('div');reply.textContent='Message received!';chat.appendChild(reply);input.value='';chat.scrollTop=chat.scrollHeight;}});
+if(input){input.addEventListener('keypress',e=>{if(e.key==='Enter' && input.value.trim()!==''){const msg=document.createElement('div');msg.textContent='You: '+input.value;chat.appendChild(msg);const reply=document.createElement('div');reply.textContent='Message received!';chat.appendChild(reply);input.value='';chat.scrollTop=chat.scrollHeight;}});
+}
 
 // Background Music
 const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e2f9a79d0.mp3?filename=cosmic-ambient-110728.mp3');
