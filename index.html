@@ -9,26 +9,30 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter';color:#0ff; background:#000; overflow-x:hidden;}
-canvas{position:fixed; top:0; left:0; z-index:-2;}
-.hud{position:fixed;width:100%;display:flex;justify-content:space-between;padding:15px;font-family:'Orbitron';font-weight:700;z-index:10; color:#0ff; text-shadow:0 0 10px #0ff,0 0 20px #0ff;}
+body{font-family:'Inter';color:#fff;background:#000;overflow-x:hidden;}
+canvas{position:fixed;top:0;left:0;z-index:-2;}
+.hud{position:fixed;width:100%;display:flex;justify-content:space-between;padding:15px;font-family:'Orbitron';font-weight:700;z-index:10;color:#fff;text-shadow:0 0 5px #fff;}
 .hud .time-date{font-size:clamp(0.9rem,2vw,1.3rem);}
 .hud .views{font-size:clamp(0.9rem,2vw,1.3rem);}
 .container{max-width:1000px;width:90%;margin:0 auto;padding:60px 0;display:flex;flex-direction:column;gap:60px;position:relative; z-index:5;}
-.section{padding:30px;border-radius:25px;background:rgba(0,255,255,0.05);backdrop-filter:blur(30px);border:1px solid rgba(0,255,255,0.3);box-shadow:0 0 60px #0ff;text-align:center;opacity:0;transition:0.5s;}
-.section h1{font-family:'Orbitron';font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:20px;text-shadow:0 0 15px #0ff,0 0 40px #0ff;}
-.skill-card{display:inline-block;margin:8px;padding:12px 20px;border-radius:15px;background:rgba(0,255,255,0.05);border:1px solid #0ff;cursor:pointer;transition:0.3s;color:#0ff;text-shadow:0 0 5px #0ff;}
-.skill-card:hover{background:rgba(0,255,255,0.15);box-shadow:0 0 20px #0ff;}
+.section{padding:30px;border-radius:25px;background:rgba(255,255,255,0.05);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 60px rgba(255,255,255,0.2);text-align:center;opacity:0;transition:0.5s;}
+.section h1{font-family:'Orbitron';font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:20px;text-shadow:0 0 10px #fff,0 0 30px #fff;}
+.skill-card{display:inline-block;margin:8px;padding:12px 20px;border-radius:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:0.3s;color:#fff;text-shadow:0 0 5px #fff;}
+.skill-card:hover{background:rgba(255,255,255,0.12);box-shadow:0 0 20px #fff;}
 .socials{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
-.social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:20px;background:rgba(0,255,255,0.05);border:1px solid #0ff;color:#0ff;text-decoration:none;font-size:16px;transition:0.4s;text-shadow:0 0 5px #0ff;}
-.social img{width:36px;height:36px;margin-bottom:5px;filter:drop-shadow(0 0 5px #0ff);}
-#chat{height:150px;overflow-y:auto;border:1px solid #0ff;padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2); color:#0ff; text-shadow:0 0 5px #0ff;}
-#chatInput{width:100%;padding:12px;border-radius:10px;border:1px solid #0ff;background:rgba(0,0,0,0.1);color:#0ff;text-shadow:0 0 5px #0ff;}
+.social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;text-decoration:none;font-size:16px;transition:0.4s;text-shadow:0 0 5px #fff;}
+.social img{width:36px;height:36px;margin-bottom:5px;filter:drop-shadow(0 0 5px #fff);}
+#chat{height:150px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);color:#fff;text-shadow:0 0 5px #fff;}
+#chatInput{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.1);color:#fff;text-shadow:0 0 5px #fff;}
+#soundPrompt{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+background:rgba(0,0,0,0.8);color:#fff;padding:30px;border-radius:20px;text-align:center;z-index:20;cursor:pointer;box-shadow:0 0 20px #fff;}
 </style>
 </head>
 <body>
 
 <canvas id="space"></canvas>
+
+<div id="soundPrompt">Click to activate sound 🔊</div>
 
 <div class="hud">
   <div class="time-date" id="timeDate">Time | Date</div>
@@ -67,11 +71,11 @@ canvas{position:fixed; top:0; left:0; z-index:-2;}
     <input type="text" placeholder="Type your message..." id="chatInput">
   </div>
 
-  <div class="section hero"><h1>Thanks for visiting! 🕊</h1><h1 class="signature">エクソスクリュー</h1></div>
+  <div class="section hero"><h1>Thanks for visiting!</h1><h1 class="signature">🕊</h1></div>
 </div>
 
 <script>
-// === Three.js Neon Space War ===
+// === Three.js Space + Jets (Black & White Crystal Theme) ===
 const canvas=document.getElementById('space');
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
@@ -85,20 +89,20 @@ const geometry=new THREE.BufferGeometry();
 const positions=new Float32Array(starCount*3);
 for(let i=0;i<starCount*3;i++) positions[i]=(Math.random()-0.5)*1000;
 geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-const material=new THREE.PointsMaterial({color:0x00ffff,size:1.8});
+const material=new THREE.PointsMaterial({color:0xffffff,size:1.5});
 const stars=new THREE.Points(geometry,material);
 scene.add(stars);
 
 // Jets
 const jetGeo=new THREE.ConeGeometry(1.5,4,4);
-const jetMat=new THREE.MeshBasicMaterial({color:0xff00ff});
+const jetMat=new THREE.MeshBasicMaterial({color:0xffffff});
 const jets=[];
 for(let i=0;i<6;i++){
   const jet=new THREE.Mesh(jetGeo,jetMat);
   jet.position.set(Math.random()*500-250,Math.random()*200-100,Math.random()*500-250);
   jet.rotation.x=Math.PI/2;
   scene.add(jet);
-  jets.push({mesh:jet,speed:0.6+Math.random(),lasers:[]});
+  jets.push({mesh:jet,speed:0.5+Math.random(),lasers:[]});
 }
 
 // Lasers
@@ -106,9 +110,23 @@ const lasers=[];
 const laserSound=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b1f9f97aa.mp3?filename=laser-1.mp3'); laserSound.volume=0.15;
 const explodeSound=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_3a2f9b1e1b.mp3?filename=explosion-1.mp3'); explodeSound.volume=0.25;
 
+// Background Music
+const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e2f9a79d0.mp3?filename=cosmic-ambient-110728.mp3');
+bgMusic.loop=true; bgMusic.volume=0.2;
+
+// Sound Activation
+const soundPrompt=document.getElementById('soundPrompt');
+soundPrompt.addEventListener('click',()=>{
+  bgMusic.play();
+  laserSound.play(); laserSound.pause();
+  explodeSound.play(); explodeSound.pause();
+  soundPrompt.style.display='none';
+});
+
+// Shoot Laser
 function shootLaser(jet){
   const laserGeo=new THREE.CylinderGeometry(0.15,0.15,6,8);
-  const laserMat=new THREE.MeshBasicMaterial({color:0x00ffff});
+  const laserMat=new THREE.MeshBasicMaterial({color:0xffffff});
   const laser=new THREE.Mesh(laserGeo,laserMat);
   laser.rotation.z=Math.PI/2;
   laser.position.set(jet.mesh.position.x,jet.mesh.position.y,jet.mesh.position.z-3);
@@ -147,7 +165,7 @@ gsap.utils.toArray('.section').forEach((s,i)=>{
   gsap.to(s,{opacity:1,duration:1.5,delay:i*0.4,ease:'power2.out'});
 });
 
-// AI Chat
+// Chat
 const chat=document.getElementById('chat');
 const input=document.getElementById('chatInput');
 if(input){input.addEventListener('keypress',e=>{
@@ -169,14 +187,10 @@ function updateTime(){
 }
 setInterval(updateTime,1000); updateTime();
 
-// View Count (localStorage)
+// View Count
 if(!localStorage.getItem('views')) localStorage.setItem('views','0');
 localStorage.setItem('views',parseInt(localStorage.getItem('views'))+1);
 document.getElementById('viewCount').textContent=`Views: ${localStorage.getItem('views')}`;
-
-// Background Music
-const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e2f9a79d0.mp3?filename=cosmic-ambient-110728.mp3');
-bgMusic.loop=true; bgMusic.volume=0.2; bgMusic.play();
 </script>
 </body>
 </html>
