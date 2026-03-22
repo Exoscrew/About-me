@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exoscrew — FORCE15 Sigma Interactive</title>
+<title>Exoscrew — About Me</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -28,6 +28,7 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 #chat{height:160px;overflow:auto;margin-bottom:10px;padding:12px;border-radius:15px;background:rgba(0,0,0,0.2);}
 input{width:100%;padding:12px;background:rgba(0,0,0,0.2);color:#00ffcc;border:1px solid #00ffcc;outline:none;border-radius:15px;}
 #secret{display:none;text-align:center;color:red;margin:40px;font-size:1.3rem;}
+#hiddenPage{display:none;text-align:center;color:#ff00ff;margin:40px;font-size:1.5rem;}
 #intro{display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;position:fixed;inset:0;width:100%;z-index:9999;background:#050505;}
 #outro{display:none;justify-content:center;align-items:center;height:100vh;flex-direction:column;position:fixed;inset:0;width:100%;z-index:9999;background:#050505;}
 #outro h1{color:#00ffcc;font-size:4rem;text-shadow:0 0 50px #00ffcc;}
@@ -44,8 +45,11 @@ input{width:100%;padding:12px;background:rgba(0,0,0,0.2);color:#00ffcc;border:1p
 <audio id="outroSound" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/outro-explosion.mp3"></audio><div class="nav">
 <a href="#hero">Home</a>
 <a href="#about">About</a>
+<a href="#projects">Projects</a>
 <a href="#connect">Connect</a>
 <a href="#ai">AI Chat</a>
+<a href="#hobbies">Hobbies</a>
+<a href="#hiddenPage">Secrets</a>
 <a href="#signature">Signature</a>
 </div><div id="intro">
 <h1 id="logo" style="opacity:0;transform:scale(0.5)">EXOSCREW</h1>
@@ -70,6 +74,12 @@ input{width:100%;padding:12px;background:rgba(0,0,0,0.2);color:#00ffcc;border:1p
 <p>Location: <strong>India</strong> | Gender: <strong>Male</strong></p>
 </div>
 </section>
+<section id="projects" class="section">
+<div class="card">
+<h2>Projects</h2>
+<p>Showcasing my system optimizations, apps, and interactive experiments.</p>
+</div>
+</section>
 <section id="connect" class="section">
 <div class="card">
 <h2>Connect With Me</h2>
@@ -88,9 +98,22 @@ input{width:100%;padding:12px;background:rgba(0,0,0,0.2);color:#00ffcc;border:1p
 <input placeholder="Ask about me..." onkeydown="ai(event)">
 </div>
 </section>
+<section id="hobbies" class="section">
+<div class="card">
+<h2>Hobbies & Interests</h2>
+<p>Coding, optimizing systems, creating cinematic designs, and exploring new technologies.</p>
+</div>
+</section>
+<section id="hiddenPage" class="section">
+<div class="card">
+<h2>Secret Page</h2>
+<p>You found the hidden layer! Try clicking around to unlock cinematic Easter-egg animations!</p>
+<div id="secretAnimationCanvas" style="width:100%;height:300px;"></div>
+</div>
+</section>
 <section id="signature" class="section signature">
-<h1 style="animation:glowPulse 2s infinite alternate;">— EXOSCREW</h1>
-<p style="text-align:center;font-size:1.2rem;opacity:0.7;">The Sigma Force Signature</p>
+<h1 style="animation:glowPulse 2s infinite alternate;">Signature — エクソスクリュー</h1>
+<p style="text-align:center;font-size:1.2rem;opacity:0.7;">Signature</p>
 </section>
 </div>
 <div id="secret"><h2>Hidden Layer Accessed</h2><p>You unlocked cinematic secrets.</p></div>
@@ -108,21 +131,17 @@ function animateIntro(){ictx.clearRect(0,0,window.innerWidth,window.innerHeight)
 animateIntro();
 gsap.to(introLogo,{opacity:1,scale:1,duration:1.5,ease:"elastic.out(1,0.5)",onStart:()=>document.getElementById("introSound").play(),onComplete:startMain});
 function startMain(){document.getElementById("intro").style.display="none";document.getElementById("main").style.display="block"; bgMusic.play();
-gsap.utils.toArray(".section").forEach(sec=>{gsap.fromTo(sec,{y:50,opacity:0,scale:0.95},{y:0,opacity:1,scale:1,duration:1.2,ease:"power3.out",scrollTrigger:{trigger:sec,start:"top 90%",end:"top 10%",scrub:true}});}); ScrollTrigger.refresh();}
-const chat=document.getElementById("chat");
-function log(t){chat.innerHTML+="<div>> "+t+"</div>";chat.scrollTop=chat.scrollHeight;}
-function ai(e){if(e.key==="Enter"){let q=e.target.value.toLowerCase();log(q); if(q.includes("who")) log("I am Exoscrew — focused, disciplined, precise."); else if(q.includes("skills")) log("HTML, Python, Java, C+, C#."); else if(q.includes("hobbies")) log("Coding, optimizing, building systems."); else if(q.includes("secret")) document.getElementById("secret").style.display="block"; else if(q.includes("social")) log("You can find me on YouTube, Telegram, Twitch, and Instagram."); else log("Hmm… I don’t understand that yet."); e.target.value="";}}
-const hoverSound=document.getElementById("hoverSound");
-gsap.utils.toArray(".social, .skill-card").forEach(el=>{el.addEventListener("mouseenter",()=>hoverSound.play());});
-const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000),renderer=new THREE.WebGLRenderer({canvas:bg,alpha:true}); renderer.setSize(innerWidth,innerHeight);
-const geo=new THREE.BufferGeometry(),verts=[]; for(let k=0;k<2000;k++){verts.push((Math.random()-0.5)*10,(Math.random()-0.5)*10,(Math.random()-0.5)*10);} geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3)); const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0x00ffcc,size:0.02})); scene.add(pts); camera.position.z=3;
-function animate(){requestAnimationFrame(animate);pts.rotation.y+=0.002;renderer.render(scene,camera);} animate();
-gsap.utils.toArray(".social").forEach(icon=>{gsap.fromTo(icon,{y:0},{y:-6,duration:2+Math.random()*1.5,repeat:-1,yoyo:true,ease:"sine.inOut"});});
-gsap.utils.toArray(".skill-card").forEach(card=>{gsap.fromTo(card,{y:0},{y:-4,duration:2+Math.random(),repeat:-1,yoyo:true,ease:"sine.inOut"});});
-lucide.createIcons();
-function triggerOutro(){document.getElementById("main").style.display="none"; const outro=document.getElementById("outro"); outro.style.display="flex"; document.getElementById("outroSound").play(); const outroCanvas=document.getElementById("outroCanvas"); outroCanvas.width=window.innerWidth; outroCanvas.height=window.innerHeight; const octx=outroCanvas.getContext('2d'); let oParticles=[]; for(let i=0;i<600;i++){oParticles.push({x:window.innerWidth/2,y:window.innerHeight/2,r:Math.random()*3+1,dx:(Math.random()-0.5)*10,dy:(Math.random()-0.5)*10});}
-function animateOutro(){octx.clearRect(0,0,window.innerWidth,window.innerHeight);oParticles.forEach(p=>{p.x+=p.dx;p.y+=p.dy;octx.beginPath();octx.arc(p.x,p.y,p.r,0,Math.PI*2);octx.fillStyle="#00ffcc";octx.fill();}); requestAnimationFrame(animateOutro);} animateOutro(); gsap.to("#outro h1",{scale:1.6,opacity:1,duration:2,ease:"elastic.out(1,0.5)"});}
-setTimeout(triggerOutro,120000);
-</script>
+gsap.utils.toArray(".section").forEach(sec=>{gsap.fromTo(sec,{y:50,opacity:0,scale:0.95},{y:0,opacity:1,scale:1,duration:1.2,ease:"power3.out",scrollTrigger:{trigger:sec,start:"top 90%",end:"top 10%",scrub:true}});}); ScrollTrigger.refresh();}const chat=document.getElementById("chat"); function log(t){chat.innerHTML+="<div>> "+t+"</div>";chat.scrollTop=chat.scrollHeight; const synth = new SpeechSynthesisUtterance(t); synth.lang='en-US'; speechSynthesis.speak(synth);} function ai(e){if(e.key==="Enter"){ let q=e.target.value.toLowerCase(); log(q); e.target.value=""; if(/who|identity|yourself/.test(q)) log("I am Exoscrew — precise, disciplined, and Sigma-level focused."); else if(/skills|languages|code/.test(q)) log("I master HTML, Python, Java, C+, and C#."); else if(/hobbies|interests|fun/.test(q)) log("I enjoy coding, optimizing systems, cinematic designs, and exploring tech."); else if(/secret|easter egg|hidden/.test(q)) { document.getElementById("secret").style.display="block"; document.getElementById("hiddenPage").scrollIntoView({behavior:'smooth'}); animateSecret(); } else if(/social|contact|connect/.test(q)) log("You can find me on YouTube, Telegram, Twitch, and Instagram."); else log("Hmm… I don't understand that yet. Try asking differently!");}}
+
+const hoverSound=document.getElementById("hoverSound"); gsap.utils.toArray(".social, .skill-card").forEach(el=>{el.addEventListener("mouseenter",()=>hoverSound.play());});
+
+// background 3D const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000),renderer=new THREE.WebGLRenderer({canvas:bg,alpha:true}); renderer.setSize(innerWidth,innerHeight); const geo=new THREE.BufferGeometry(),verts=[]; for(let k=0;k<2000;k++){verts.push((Math.random()-0.5)*10,(Math.random()-0.5)*10,(Math.random()-0.5)*10);} geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3)); const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0x00ffcc,size:0.02})); scene.add(pts); camera.position.z=3; function animate(){requestAnimationFrame(animate);pts.rotation.y+=0.002;renderer.render(scene,camera);} animate();
+
+// floating animations gsap.utils.toArray(".social").forEach(icon=>{gsap.fromTo(icon,{y:0},{y:-6,duration:2+Math.random()*1.5,repeat:-1,yoyo:true,ease:"sine.inOut"});}); gsap.utils.toArray(".skill-card").forEach(card=>{gsap.fromTo(card,{y:0},{y:-4,duration:2+Math.random(),repeat:-1,yoyo:true,ease:"sine.inOut"});}); lucide.createIcons();
+
+// secret Easter-egg animation function animateSecret(){ const canvas=document.getElementById('secretAnimationCanvas'); if(!canvas) return; const ctx=canvas.getContext('2d'); canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight; let particles=[]; for(let i=0;i<200;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*4+1,dx:(Math.random()-0.5)*2,dy:(Math.random()-0.5)2});} function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.x+=p.dx; p.y+=p.dy;if(p.x>canvas.width)p.x=0;if(p.x<0)p.x=canvas.width;if(p.y>canvas.height)p.y=0;if(p.y<0)p.y=canvas.height;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI2);ctx.fillStyle="#ff00ff";ctx.fill();}); requestAnimationFrame(draw); } draw(); }
+
+function triggerOutro(){document.getElementById("main").style.display="none"; const outro=document.getElementById("outro"); outro.style.display="flex"; document.getElementById("outroSound").play(); const outroCanvas=document.getElementById("outroCanvas"); outroCanvas.width=window.innerWidth; outroCanvas.height=window.innerHeight; const octx=outroCanvas.getContext('2d'); let oParticles=[]; for(let i=0;i<600;i++){oParticles.push({x:window.innerWidth/2,y:window.innerHeight/2,r:Math.random()*3+1,dx:(Math.random()-0.5)*10,dy:(Math.random()-0.5)10});} function animateOutro(){octx.clearRect(0,0,window.innerWidth,window.innerHeight);oParticles.forEach(p=>{p.x+=p.dx;p.y+=p.dy;octx.beginPath();octx.arc(p.x,p.y,p.r,0,Math.PI2);octx.fillStyle="#00ffcc";octx.fill();}); requestAnimationFrame(animateOutro);} animateOutro(); gsap.to("#outro h1",{scale:1.6,opacity:1,duration:2,ease:"elastic.out(1,0.5)"});} setTimeout(triggerOutro,120000); </script>
+
 </body>
 </html>
