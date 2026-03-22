@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exoscrew — FORCE6 GOD MODE</title>
+<title>Exoscrew — FORCE6 MOBILE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 
@@ -14,40 +14,30 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#050505;color:#00ffcc;font-family:'Inter';overflow:hidden;}
-.cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:#00ffcc;pointer-events:none;z-index:999;transform:translate(-50%,-50%);box-shadow:0 0 15px #00ffcc;}
-.trail{position:fixed;width:6px;height:6px;background:#00ffcc;border-radius:50%;pointer-events:none;opacity:0.6;z-index:999;animation:fade 0.6s linear forwards;}
-@keyframes fade{to{opacity:0;transform:scale(0)}}
-#intro{position:fixed;inset:0;background:black;display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:9999;}
-#logo{font-family:'Orbitron';font-size:3rem;color:#00ffcc;letter-spacing:4px;}
-#main{display:none;height:100vh;overflow-y:auto;}
-.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;}
-.hero h1{font-family:'Orbitron';font-size:3rem;}
-.section{padding:80px 20px;opacity:0;}
-.card{max-width:520px;margin:20px auto;padding:25px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(0,255,204,0.2);transition:0.4s;}
-.card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 0 40px rgba(0,255,204,0.4);}
-.socials{display:flex;gap:15px;margin-top:20px;flex-wrap:wrap;}
-.social{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,204,0.2);color:#00ffcc;text-decoration:none;transition:0.4s;animation:float 3s ease-in-out infinite;}
-.social i{width:22px;height:22px;}
-@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-5px)}100%{transform:translateY(0)}}
+body{background:#050505;color:#00ffcc;font-family:'Inter';overflow:hidden;font-size:16px;}
+#main{display:none;min-height:100vh;overflow-y:auto;}
+.hero{height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:10px;}
+.hero h1{font-family:'Orbitron';font-size:2rem;}
+.section{padding:40px 15px;opacity:0;}
+.card{max-width:90%;margin:15px auto;padding:20px;border-radius:15px;background:rgba(255,255,255,0.05);backdrop-filter:blur(15px);border:1px solid rgba(0,255,204,0.2);}
+.socials{display:flex;gap:12px;margin-top:15px;flex-wrap:wrap;justify-content:center;}
+.social{display:flex;align-items:center;gap:8px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,204,0.2);color:#00ffcc;text-decoration:none;font-size:14px;flex:1 1 40%;}
+.social i{width:20px;height:20px;}
 .social:hover{transform:scale(1.1);box-shadow:0 0 25px #00ffcc;}
 .social.yt:hover{color:red;box-shadow:0 0 25px red;}
 .social.tg:hover{color:#00aaff;box-shadow:0 0 25px #00aaff;}
-#chat{height:150px;overflow:auto;margin-bottom:10px;}
-input{width:100%;padding:12px;background:black;color:#00ffcc;border:1px solid #00ffcc;outline:none;}
+#chat{height:120px;overflow:auto;margin-bottom:10px;}
+input{width:100%;padding:10px;background:black;color:#00ffcc;border:1px solid #00ffcc;outline:none;}
 #secret{display:none;text-align:center;color:red;margin:40px;}
 canvas{position:fixed;top:0;left:0;z-index:-1;}
-#gameCanvas{width:100%;height:400px;background:black;display:block;margin:auto;border:1px solid #00ffcc;border-radius:15px;}
-#terminal{display:none;position:fixed;inset:0;background:black;color:#00ff00;font-family:monospace;padding:20px;z-index:99999;overflow:auto;}
+#terminal{display:none;position:fixed;inset:0;background:black;color:#00ff00;font-family:monospace;padding:15px;z-index:99999;overflow:auto;font-size:14px;}
 </style>
 </head>
 
 <body>
 
-<div class="cursor" id="cursor"></div>
-
 <!-- INTRO -->
-<div id="intro">
+<div id="intro" style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;">
 <h1 id="logo">EXOSCREW</h1>
 <p id="boot"></p>
 </div>
@@ -59,13 +49,11 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 <p>Creator • Developer • System Thinker</p>
 </section>
 
-<!-- ABOUT + SOCIALS -->
 <section class="section">
 <div class="card">
 <h2>About Me</h2>
 <p>Focused, disciplined, and driven by precision. I build systems and experiences with clarity, structure, and intent.</p>
 <p>Skills: <strong>HTML • Python • Java • C+ • C#</strong></p>
-
 <div class="socials">
 <a href="https://www.youtube.com/@EXOSCREW" target="_blank" class="social yt"><i data-lucide="youtube"></i> YouTube</a>
 <a href="https://t.me/exoscrew" target="_blank" class="social tg"><i data-lucide="send"></i> Telegram</a>
@@ -73,98 +61,76 @@ canvas{position:fixed;top:0;left:0;z-index:-1;}
 </div>
 </section>
 
-<!-- AI -->
 <section class="section">
 <div class="card">
-<h2>AI Personality System</h2>
+<h2>AI Personality</h2>
 <div id="chat"></div>
 <input placeholder="Ask about me..." onkeydown="ai(event)">
 </div>
 </section>
 
-<!-- MINI-GAME -->
-<section class="section">
-<div class="card">
-<h2>Mini Game</h2>
-<canvas id="gameCanvas"></canvas>
-<p style="text-align:center;">Use arrow keys to move, space to shoot.</p>
-</div>
-</section>
-
 </div>
 
-<div id="secret">
-<h2>Hidden Layer Accessed</h2>
-<p>You unlocked FORCE6 secrets.</p>
-</div>
+<div id="secret"><h2>Hidden Layer Accessed</h2><p>You unlocked FORCE6 secrets.</p></div>
 
 <canvas id="bg"></canvas>
 <div id="terminal"></div>
 
 <script>
-/* Cursor */
-const cursor=document.getElementById("cursor");
-document.addEventListener("mousemove",e=>{
-cursor.style.left=e.clientX+"px";
-cursor.style.top=e.clientY+"px";
-let t=document.createElement("div");t.className="trail";
-t.style.left=e.clientX+"px";t.style.top=e.clientY+"px";
-document.body.appendChild(t);setTimeout(()=>t.remove(),600);
-});
-
-/* Intro */
-const lines=["Initializing...","Loading Profile...","Welcome"];
+/* Intro typing */
+const lines=["Initializing...","Loading Profile...","Welcome"], boot=document.getElementById("boot"); 
 let i=0,j=0;
-const boot=document.getElementById("boot");
-function type(){if(i<lines.length){if(j<lines[i].length){boot.innerHTML+=lines[i][j++];setTimeout(type,25);}else{boot.innerHTML+="<br>";i++;j=0;setTimeout(type,300);}}else setTimeout(start,800);} 
-type();
-function start(){intro.style.display="none";main.style.display="block";document.body.style.overflow="auto";gsap.utils.toArray(".section").forEach(sec=>{gsap.fromTo(sec,{y:80,opacity:0},{y:0,opacity:1,duration:1,scrollTrigger:{trigger:sec,start:"top 85%"}});});}
+function type(){ 
+  if(i<lines.length){ 
+    if(j<lines[i].length){
+      boot.innerHTML+=lines[i][j++]; 
+      setTimeout(type,25);
+    } else { 
+      i++; j=0; boot.innerHTML+="<br>"; 
+      setTimeout(type,300);
+    }
+  } else startMain();
+}
 
-/* AI */
+function startMain(){
+  document.getElementById("intro").style.display="none";
+  document.getElementById("main").style.display="block";
+  document.body.style.overflow="auto";
+
+  // Animate sections with GSAP
+  gsap.utils.toArray(".section").forEach(sec=>{
+    gsap.fromTo(sec,{y:60,opacity:0},{y:0,opacity:1,duration:1,scrollTrigger:{trigger:sec,start:"top 90%"}});
+  });
+
+  ScrollTrigger.refresh();
+}
+
+type();
+
+/* AI Personality */
 const chat=document.getElementById("chat");
 function log(t){chat.innerHTML+="<div>> "+t+"</div>";chat.scrollTop=chat.scrollHeight;}
 function ai(e){if(e.key==="Enter"){let q=e.target.value.toLowerCase();log(q);
 if(q.includes("who")) log("Focused creator and system thinker.");
 else if(q.includes("skills")) log("HTML, Python, Java, C+, C#.");
 else if(q==="unlock") document.getElementById("secret").style.display="block";
-else if(q==="matrix") document.body.classList.toggle("matrix");
-else log("Refine your query.");e.target.value="";}}
+else log("Refine your query."); e.target.value="";}}
 
-/* 3D BG */
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
-const renderer=new THREE.WebGLRenderer({canvas:bg,alpha:true});
+/* 3D background (simplified for mobile) */
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000),
+renderer=new THREE.WebGLRenderer({canvas:bg,alpha:true});
 renderer.setSize(innerWidth,innerHeight);
-const geo=new THREE.BufferGeometry();
-let verts=[];
-for(let k=0;k<1500;k++){verts.push((Math.random()-0.5)*10,(Math.random()-0.5)*10,(Math.random()-0.5)*10);}
+const geo=new THREE.BufferGeometry(),verts=[];
+for(let k=0;k<800;k++){verts.push((Math.random()-0.5)*10,(Math.random()-0.5)*10,(Math.random()-0.5)*10);}
 geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));
 const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0x00ffcc,size:0.02}));
-scene.add(pts);camera.position.z=3;
+scene.add(pts);
+camera.position.z=3;
 function animate(){requestAnimationFrame(animate);pts.rotation.y+=0.001;renderer.render(scene,camera);}
 animate();
 
 /* Icons */
 lucide.createIcons();
-
-/* MINI-GAME */
-const gameCanvas=document.getElementById("gameCanvas");
-const gctx=gameCanvas.getContext("2d");
-let ship={x:200,y:350,w:20,h:20};
-let bullets=[];
-let keys={};
-document.addEventListener("keydown",e=>keys[e.key]=true);
-document.addEventListener("keyup",e=>keys[e.key]=false);
-function gameLoop(){
-gctx.clearRect(0,0,gameCanvas.width,gameCanvas.height);
-gctx.fillStyle="#00ffcc";gctx.fillRect(ship.x,ship.y,ship.w,ship.h);
-bullets.forEach(b=>{b.y-=5;gctx.fillRect(b.x,b.y,4,10);});
-bullets=bullets.filter(b=>b.y>0);
-if(keys.ArrowLeft) ship.x-=4;if(keys.ArrowRight) ship.x+=4;if(keys.ArrowUp) ship.y-=4;if(keys.ArrowDown) ship.y+=4;
-if(keys[" "]){if(!ship.shootCooldown){bullets.push({x:ship.x+ship.w/2-2,y:ship.y});ship.shootCooldown=10;}} 
-if(ship.shootCooldown>0) ship.shootCooldown--;
-requestAnimationFrame(gameLoop);}
-gameLoop();
 </script>
 
 </body>
