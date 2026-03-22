@@ -31,6 +31,7 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
 </style>
 </head>
 <body>
+
 <canvas id="space"></canvas>
 <canvas class="matrixCanvas" id="matrix"></canvas>
 
@@ -40,38 +41,38 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
 </div>
 
 <div class="container">
-<div class="section hero"><h1>Welcome!</h1></div>
+  <div class="section hero"><h1>Welcome!</h1></div>
 
-<div class="section">
-<h1>About Me</h1>
-<p>I’m Exoscrew, male, from India.<br>Hobbies: Coding, Gaming, Anime, Music.<br>My Works: Web Projects, AI Experiments, Interactive Sites.</p>
-</div>
+  <div class="section">
+    <h1>About Me</h1>
+    <p>I’m Exoscrew, male, from India.<br>Hobbies: Coding, Gaming, Anime, Music.<br>My Works: Web Projects, Interactive Sites.</p>
+  </div>
 
-<div class="section">
-<h1>Skills</h1>
-<div class="skill-card" onclick="window.open('https://developer.mozilla.org/en-US/docs/Web/HTML','_blank')">HTML</div>
-<div class="skill-card" onclick="window.open('https://www.python.org/','_blank')">Python</div>
-<div class="skill-card" onclick="window.open('https://www.java.com/','_blank')">Java</div>
-<div class="skill-card" onclick="window.open('https://isocpp.org/','_blank')">C+</div>
-<div class="skill-card" onclick="window.open('https://learn.microsoft.com/en-us/dotnet/csharp/','_blank')">C#</div>
-</div>
+  <div class="section">
+    <h1>Skills</h1>
+    <div class="skill-card" onclick="window.open('https://developer.mozilla.org/en-US/docs/Web/HTML','_blank')">HTML</div>
+    <div class="skill-card" onclick="window.open('https://www.python.org/','_blank')">Python</div>
+    <div class="skill-card" onclick="window.open('https://www.java.com/','_blank')">Java</div>
+    <div class="skill-card" onclick="window.open('https://isocpp.org/','_blank')">C+</div>
+    <div class="skill-card" onclick="window.open('https://learn.microsoft.com/en-us/dotnet/csharp/','_blank')">C#</div>
+  </div>
 
-<div class="section socials">
-<a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
-<a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
-<a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968871.png" alt="Twitch">Twitch</a>
-<a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Insta</a>
-</div>
+  <div class="section socials">
+    <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
+    <a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
+    <a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968871.png" alt="Twitch">Twitch</a>
+    <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Insta</a>
+  </div>
 
-<div class="section"><h1 class="signature">エクソスクリュー</h1></div>
+  <div class="section"><h1 class="signature">エクソスクリュー</h1></div>
 
-<div class="section">
-<h1>Contact</h1>
-<div id="chat"></div>
-<input type="text" placeholder="Type your message..." id="chatInput">
-</div>
+  <div class="section">
+    <h1>Contact</h1>
+    <div id="chat"></div>
+    <input type="text" placeholder="Type your message..." id="chatInput">
+  </div>
 
-<div class="section hero"><h1>Thanks for visiting!</h1><h1 class="signature">🕊</h1></div>
+  <div class="section hero"><h1>Thanks for visiting!</h1><h1 class="signature">🕊</h1></div>
 </div>
 
 <div class="dynamiteInterface" id="dynamiteInterface">
@@ -190,55 +191,61 @@ document.getElementById('viewCount').textContent=`Views: ${localStorage.getItem(
 const bgMusic=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e2f9a79d0.mp3?filename=cosmic-ambient-110728.mp3');
 bgMusic.loop=true; bgMusic.volume=0.2; bgMusic.play();
 
-// Matrix + Dynamite + Explosion + Dragon
-const matrixCanvas=document.getElementById('matrix');
-const ctx=matrixCanvas.getContext('2d');
-matrixCanvas.width=window.innerWidth;
-matrixCanvas.height=window.innerHeight;
-const dynamiteInterface=document.getElementById('dynamiteInterface');
+// === FIXED CINEMATIC SEQUENCE ===
+const matrixCanvas2 = document.getElementById('matrix');
+const ctx2 = matrixCanvas2.getContext('2d');
+matrixCanvas2.width = window.innerWidth;
+matrixCanvas2.height = window.innerHeight;
+const dynamiteInterface2 = document.getElementById('dynamiteInterface');
+const neonColor = '#39FF14'; // Neon green
 
 function startCinematic(){
-  matrixCanvas.style.display='block';
-  dynamiteInterface.style.display='block';
-  const cols=Math.floor(matrixCanvas.width/20);
-  const ypos=Array(cols).fill(0);
-  let dragonY=matrixCanvas.height+200;
-  let dragonImage=new Image();
-  dragonImage.src='https://i.ibb.co/xhGV0kS/dragon.png';
-  let frame=0;
-  const interval=setInterval(()=>{
-    frame++;
-    ctx.fillStyle='rgba(0,0,0,0.05)';
-    ctx.fillRect(0,0,matrixCanvas.width,matrixCanvas.height);
-    ctx.fillStyle='#0F0';
-    ctx.font='20px monospace';
-    ypos.forEach((y,index)=>{
-      const text=String.fromCharCode(33+Math.random()*94);
-      ctx.fillText(text,index*20,y);
-      ypos[index]+=20;
-      if(ypos[index]>matrixCanvas.height) ypos[index]=0;
-    });
+    matrixCanvas2.style.display='block';
+    dynamiteInterface2.style.display='block';
+    const cols=Math.floor(matrixCanvas2.width/20);
+    const ypos=Array(cols).fill(0);
+    let dragonY=matrixCanvas2.height+300;
+    let dragonImage=new Image();
+    dragonImage.src='https://i.ibb.co/xhGV0kS/dragon.png';
+    let frame=0;
+    let explosionTriggered=false;
 
-    // After 5s of dynamite (~frame 160)
-    if(frame>160){
-      explodeSound.currentTime=0; explodeSound.play();
-      gsap.to(dynamiteInterface,{opacity:0,duration:0.5});
-    }
+    const interval=setInterval(()=>{
+        frame++;
+        ctx2.fillStyle='rgba(0,0,0,0.05)';
+        ctx2.fillRect(0,0,matrixCanvas2.width,matrixCanvas2.height);
+        ctx2.fillStyle = neonColor;
+        ctx2.font = '20px monospace';
+        ypos.forEach((y,index)=>{
+            const text=String.fromCharCode(33+Math.random()*94);
+            ctx2.fillText(text,index*20,y);
+            ypos[index]+=20;
+            if(ypos[index]>matrixCanvas2.height) ypos[index]=0;
+        });
 
-    // Dragon rise after dynamite
-    if(frame>180){
-      dragonY-=3;
-      ctx.drawImage(dragonImage,matrixCanvas.width/2-150,dragonY,300,300);
-    }
+        // Dynamite explosion trigger
+        if(frame === 160 && !explosionTriggered){
+            explosionTriggered=true;
+            explodeSound.currentTime=0; explodeSound.play();
+            gsap.to(dynamiteInterface2.querySelectorAll('.dynamite'),{
+                x:'+=50', y:'+=50', rotation:360, duration:1, repeat:2, yoyo:true,
+                onComplete:()=>{gsap.to(dynamiteInterface2,{opacity:0,duration:0.5,onComplete:()=>{dynamiteInterface2.style.display='none';}});}
+            });
+        }
 
-    // Stop cinematic after dragon reaches mid
-    if(dragonY<window.innerHeight/2){
-      clearInterval(interval);
-      matrixCanvas.style.display='none';
-      dynamiteInterface.style.display='none';
-    }
-  },30);
+        // Dragon rise
+        if(frame > 170){
+            dragonY -=3;
+            ctx2.drawImage(dragonImage,matrixCanvas2.width/2-150,dragonY,300,300);
+        }
+
+        if(dragonY < window.innerHeight/2){
+            clearInterval(interval);
+            matrixCanvas2.style.display='none';
+        }
+    },30);
 }
+
 setTimeout(startCinematic,10000);
 </script>
 </body>
