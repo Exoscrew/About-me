@@ -34,15 +34,19 @@ input{width:100%;padding:12px;background:rgba(0,0,0,0.2);color:#00ffcc;border:1p
 canvas#gameCanvas{border-radius:15px;background:#111;display:block;margin:0 auto;}
 </style>
 </head>
-<body><audio id="introSound" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/intro-swoosh.mp3"></audio> <audio id="hoverSound" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/hover.mp3"></audio> <audio id="bgMusic" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/ambient-loop.mp3" loop></audio> <audio id="outroSound" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/outro-explosion.mp3"></audio>
-
-<div id="intro">
+<body>
+<audio id="introSound" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/intro-swoosh.mp3"></audio>
+<audio id="hoverSound" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/hover.mp3"></audio>
+<audio id="bgMusic" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/ambient-loop.mp3" loop></audio>
+<audio id="outroSound" src="https://cdn.jsdelivr.net/gh/Exoscrew/sounds/outro-explosion.mp3"></audio><div id="intro">
 <h1 id="logo" style="opacity:0;transform:scale(0.5)">EXOSCREW</h1>
 <canvas id="introCanvas"></canvas>
-</div><div id="main" style="display:none;"><section class="section hero">
+</div><div id="main" style="display:none;">
+<section class="section hero">
 <h1>EXOSCREW</h1>
 <p>Creator • Developer • System Thinker</p>
-</section><section class="section">
+</section>
+<section class="section">
 <div class="card">
 <h2>About Me</h2>
 <p>Focused, disciplined, and driven by precision. I build systems and experiences with clarity, structure, and intent.</p>
@@ -56,7 +60,8 @@ canvas#gameCanvas{border-radius:15px;background:#111;display:block;margin:0 auto
 </div>
 <p>Location: <strong>India</strong> | Gender: <strong>Male</strong></p>
 </div>
-</section><section class="section">
+</section>
+<section class="section">
 <div class="card">
 <h2>Connect With Me</h2>
 <div class="socials">
@@ -66,81 +71,63 @@ canvas#gameCanvas{border-radius:15px;background:#111;display:block;margin:0 auto
 <a href="https://www.instagram.com/exoscrew" target="_blank" class="social ig"><i data-lucide="instagram"></i> Instagram</a>
 </div>
 </div>
-</section><section class="section">
+</section>
+<section class="section">
 <div class="card">
 <h2>AI Personality</h2>
 <div id="chat"></div>
 <input placeholder="Ask about me..." onkeydown="ai(event)">
 </div>
-</section><section class="section">
+</section>
+<section class="section">
 <div class="card">
 <h2>Mini Game</h2>
 <canvas id="gameCanvas" width="320" height="240"></canvas>
 <p style="opacity:0.7;text-align:center;">Click/Touch to play!</p>
 </div>
-</section><section class="section">
+</section>
+<section class="section">
 <div class="card">
 <h2>Extras & Easter Eggs</h2>
 <p>Type "secret" in AI chat to unlock cinematic surprises!</p>
 </div>
-</section><section class="section signature">
+</section>
+<section class="section signature">
 <h1>— EXOSCREW</h1>
 <p style="text-align:center;font-size:1.2rem;opacity:0.7;">The Sigma Force Signature</p>
-</section></div><div id="secret"><h2>Hidden Layer Accessed</h2><p>You unlocked cinematic secrets.</p></div><div id="outro">
-<h1>— EXOSCREW —</h1>
-<p style="opacity:0.7;">Thanks for visiting!</p>
+</section>
+</div>
+<div id="secret"><h2>Hidden Layer Accessed</h2><p>You unlocked cinematic secrets.</p></div>
+<div id="outro">
+<h1>Thanks for visiting!</h1>
 <canvas id="outroCanvas"></canvas>
-</div><canvas id="bg"></canvas>
-
+</div>
+<canvas id="bg"></canvas>
 <script>
-/* Background music */
 const bgMusic=document.getElementById("bgMusic"); bgMusic.volume=0.3; bgMusic.play();
-
-/* Intro particles + sound */
 const introLogo=document.getElementById('logo'); const introCanvas=document.getElementById('introCanvas'); introCanvas.width=window.innerWidth; introCanvas.height=window.innerHeight;
 const ictx=introCanvas.getContext('2d'); let particles=[]; for(let i=0;i<400;i++){particles.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*3+1,dx:(Math.random()-0.5)*2,dy:(Math.random()-0.5)*2});}
 function animateIntro(){ictx.clearRect(0,0,window.innerWidth,window.innerHeight);particles.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x>window.innerWidth)p.x=0;if(p.x<0)p.x=window.innerWidth;if(p.y>window.innerHeight)p.y=0;if(p.y<0)p.y=window.innerHeight;ictx.beginPath();ictx.arc(p.x,p.y,p.r,0,Math.PI*2);ictx.fillStyle="#00ffcc";ictx.fill();});requestAnimationFrame(animateIntro);}
 animateIntro();
 gsap.to(introLogo,{opacity:1,scale:1,duration:1.5,ease:"elastic.out(1,0.5)",onStart:()=>document.getElementById("introSound").play(),onComplete:startMain});
-
 function startMain(){document.getElementById("intro").style.display="none";document.getElementById("main").style.display="block";
 gsap.utils.toArray(".section").forEach(sec=>{gsap.fromTo(sec,{y:100,opacity:0,scale:0.95},{y:0,opacity:1,scale:1,duration:1.2,ease:"power3.out",scrollTrigger:{trigger:sec,start:"top 80%",end:"top 20%",scrub:true}});}); ScrollTrigger.refresh();}
-
-/* AI Personality */
 const chat=document.getElementById("chat");
 function log(t){chat.innerHTML+="<div>> "+t+"</div>";chat.scrollTop=chat.scrollHeight;}
-function ai(e){if(e.key==="Enter"){let q=e.target.value.toLowerCase();log(q);
-if(q.includes("who")) log("I am Exoscrew — focused, disciplined, precise.");
-else if(q.includes("skills")) log("HTML, Python, Java, C+, C#.");
-else if(q.includes("hobbies")) log("Coding, optimizing, building systems.");
-else if(q.includes("secret")) document.getElementById("secret").style.display="block";
-else if(q.includes("social")) log("You can find me on YouTube, Telegram, Twitch, and Instagram.");
-else log("Hmm… I don’t understand that yet."); e.target.value="";}}
-
-/* Hover sound */
+function ai(e){if(e.key==="Enter"){let q=e.target.value.toLowerCase();log(q); if(q.includes("who")) log("I am Exoscrew — focused, disciplined, precise."); else if(q.includes("skills")) log("HTML, Python, Java, C+, C#."); else if(q.includes("hobbies")) log("Coding, optimizing, building systems."); else if(q.includes("secret")) document.getElementById("secret").style.display="block"; else if(q.includes("social")) log("You can find me on YouTube, Telegram, Twitch, and Instagram."); else log("Hmm… I don’t understand that yet."); e.target.value="";}}
 const hoverSound=document.getElementById("hoverSound");
 gsap.utils.toArray(".social, .skill-card").forEach(el=>{el.addEventListener("mouseenter",()=>hoverSound.play());});
-
-/* 3D Particle background */
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000),renderer=new THREE.WebGLRenderer({canvas:bg,alpha:true}); renderer.setSize(innerWidth,innerHeight);
 const geo=new THREE.BufferGeometry(),verts=[]; for(let k=0;k<2000;k++){verts.push((Math.random()-0.5)*10,(Math.random()-0.5)*10,(Math.random()-0.5)*10);} geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3)); const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0x00ffcc,size:0.02})); scene.add(pts); camera.position.z=3;
 function animate(){requestAnimationFrame(animate);pts.rotation.y+=0.002;renderer.render(scene,camera);} animate();
-
-/* Floating animations */
 gsap.utils.toArray(".social").forEach(icon=>{gsap.fromTo(icon,{y:0},{y:-6,duration:2+Math.random()*1.5,repeat:-1,yoyo:true,ease:"sine.inOut"});});
 gsap.utils.toArray(".skill-card").forEach(card=>{gsap.fromTo(card,{y:0},{y:-4,duration:2+Math.random(),repeat:-1,yoyo:true,ease:"sine.inOut"});});
-
 lucide.createIcons();
-
-/* Mini game simple click */
 const gameCanvas=document.getElementById('gameCanvas'); const gctx=gameCanvas.getContext('2d'); let px=150, py=120;
 gameCanvas.addEventListener('click',()=>{px=Math.random()*300; py=Math.random()*220; drawGame();}); function drawGame(){gctx.clearRect(0,0,320,240); gctx.fillStyle='#00ffcc'; gctx.fillRect(px,py,20,20);} drawGame();
-
-/* Outro cinematic */
 function triggerOutro(){document.getElementById("main").style.display="none"; const outro=document.getElementById("outro"); outro.style.display="flex"; document.getElementById("outroSound").play(); const outroCanvas=document.getElementById("outroCanvas"); outroCanvas.width=window.innerWidth; outroCanvas.height=window.innerHeight; const octx=outroCanvas.getContext('2d'); let oParticles=[]; for(let i=0;i<600;i++){oParticles.push({x:window.innerWidth/2,y:window.innerHeight/2,r:Math.random()*3+1,dx:(Math.random()-0.5)*10,dy:(Math.random()-0.5)*10});}
 function animateOutro(){octx.clearRect(0,0,window.innerWidth,window.innerHeight);oParticles.forEach(p=>{p.x+=p.dx;p.y+=p.dy;octx.beginPath();octx.arc(p.x,p.y,p.r,0,Math.PI*2);octx.fillStyle="#00ffcc";octx.fill();}); requestAnimationFrame(animateOutro);} animateOutro(); gsap.to("#outro h1",{scale:1.4,opacity:1,duration:1.5,ease:"elastic.out(1,0.5)"});}
-
-/* Auto trigger outro after 2 mins */
 setTimeout(triggerOutro,120000);
-</script></body>
+</script>
+</body>
 </html>
