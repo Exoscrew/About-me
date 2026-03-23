@@ -1,243 +1,176 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Exoscrew</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter';color:#fff;background:#000;overflow-x:hidden;}
-canvas{position:fixed;top:0;left:0;z-index:-2;}
-.hud{position:fixed;width:100%;display:flex;justify-content:space-between;padding:15px;font-family:'Orbitron';font-weight:700;z-index:10;color:#fff;text-shadow:0 0 5px #fff;}
-.hud .time-date{font-size:clamp(0.9rem,2vw,1.3rem);}
-.hud .views{font-size:clamp(0.9rem,2vw,1.3rem);}
-.container{max-width:1000px;width:90%;margin:0 auto;padding:60px 0;display:flex;flex-direction:column;gap:60px;position:relative; z-index:5;}
-.section{
-  padding:30px;border-radius:25px;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(30px);
-  border:1px solid rgba(255,255,255,0.2);
-  box-shadow:0 0 20px rgba(255,255,255,0.2),
-             0 0 40px rgba(0,255,255,0.1),
-             0 0 80px rgba(255,255,255,0.05);
-  text-align:center;opacity:0;transition:0.5s, box-shadow 0.5s;
-  animation: pulseGlow 4s infinite ease-in-out;
-}
-@keyframes pulseGlow{
-  0%,100% {box-shadow:0 0 20px rgba(0,255,255,0.2),0 0 40px rgba(255,255,255,0.1);}
-  50% {box-shadow:0 0 50px rgba(0,255,255,0.5),0 0 80px rgba(255,255,255,0.2);}
-}
-.section h1{font-family:'Orbitron';font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:20px;text-shadow:0 0 10px #fff,0 0 30px #fff;}
-.skill-card{display:inline-block;margin:8px;padding:12px 20px;border-radius:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:0.3s;color:#fff;text-shadow:0 0 5px #fff;}
-.skill-card:hover{background: rgba(0,255,255,0.12); box-shadow:0 0 20px #0ff,0 0 50px #0ff; transform:scale(1.05);}
-.socials{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
-.social{display:flex;flex-direction:column;justify-content:center;align-items:center;width:70px;height:70px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;text-decoration:none;font-size:16px;transition:0.4s;text-shadow:0 0 5px #fff;}
-.social img{width:36px;height:36px;margin-bottom:5px;filter:drop-shadow(0 0 5px #0ff);}
-.social:hover{background: rgba(0,255,255,0.12); box-shadow:0 0 20px #0ff,0 0 50px #0ff; transform:scale(1.1);}
-#chat{height:200px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:10px;margin-bottom:10px;border-radius:10px;background:rgba(0,0,0,0.2);color:#fff;text-shadow:0 0 5px #fff;}
-#chatInput{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.1);color:#fff;text-shadow:0 0 5px #fff;}
-.signature{text-shadow:0 0 10px #0ff,0 0 40px #fff,0 0 80px #0ff;}
-</style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:'Orbitron',sans-serif;overflow:hidden}
+canvas{position:fixed;top:0;left:0;z-index:-1}/* HUD */ .hud{position:fixed;top:10px;left:12px;font-size:12px;opacity:.9}
+
+/* GLASS */ .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.25);border-radius:18px;box-shadow:0 10px 40px rgba(255,255,255,.06)}
+
+.container{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:min(900px,92%);padding:20px} h1{font-size:2.6rem;letter-spacing:3px;margin-bottom:10px}
+
+.section{margin-top:18px;opacity:0;transform:translateY(16px);transition:.7s} .section.show{opacity:1;transform:translateY(0)}
+
+.skills a{display:inline-block;margin:8px;padding:10px 14px;border:1px solid #fff;color:#fff;text-decoration:none;border-radius:12px} .skills a:hover{background:#fff;color:#000}
+
+.socials a{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin:8px;border:1px solid #fff;border-radius:14px;color:#fff;text-decoration:none} .socials a:hover{background:#fff;color:#000}
+
+/* TRACE */ #traceBox{position:fixed;bottom:14px;right:14px;width:240px;padding:10px} #traceTitle{text-align:center;margin-bottom:6px} #traceMessages{max-height:100px;overflow:auto;margin-bottom:6px} #traceMessages div{opacity:0;animation:fadeIn .5s forwards} #traceInput{width:100%;background:#000;border:1px solid #fff;color:#fff;padding:6px;border-radius:8px}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}} </style>
+
 </head>
-<body>
-
-<canvas id="space"></canvas>
-
-<div class="hud">
-  <div class="time-date" id="timeDate">Time | Date</div>
-  <div class="views" id="viewCount">Views: 0</div>
-</div>
-
-<div class="container" id="pageContent">
-  <div class="section hero"><h1>Welcome!</h1></div>
-
-  <div class="section">
-    <h1>About Me</h1>
-    <p>I’m Exoscrew, male, from India.<br>Hobbies: Coding, Gaming, Anime, Music.<br>My Works: Web Projects, Interactive Sites.</p>
+<body><div class="hud">
+  <div id="time"></div>
+  <div id="date"></div>
+  <div id="views"></div>
+</div><div class="container glass" id="panel">
+  <h1 id="type"></h1>  <div class="section" id="about">
+    <h2>About Me</h2>
+    <p>Hobbies: coding, building systems, exploring ideas • Works: web apps, games, UI</p>
+  </div>  <div class="section skills">
+    <h2>Skills</h2>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">HTML</a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">CSS</a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JS</a>
+  </div>  <div class="section socials">
+    <h2>Socials</h2>
+    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="#" title="Twitch"><i class="fab fa-twitch"></i></a>
+    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+  </div>  <div class="section">
+    <h2>Contact</h2>
+    <p>exoscrew@proton.me</p>
   </div>
+</div><div id="traceBox" class="glass">
+  <div id="traceTitle">Leave a Trace</div>
+  <div id="traceMessages"></div>
+  <input id="traceInput" placeholder="Say something..." />
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script><script>
+// TYPEWRITER
+const text = 'Exoscrew';
+let i=0; const el=document.getElementById('type');
+(function type(){ if(i<=text.length){ el.textContent=text.slice(0,i++); setTimeout(type,70);} })();
 
-  <div class="section">
-    <h1>Skills</h1>
-    <div class="skill-card" onclick="window.open('https://developer.mozilla.org/en-US/docs/Web/HTML','_blank')">HTML</div>
-    <div class="skill-card" onclick="window.open('https://www.python.org/','_blank')">Python</div>
-    <div class="skill-card" onclick="window.open('https://www.java.com/','_blank')">Java</div>
-    <div class="skill-card" onclick="window.open('https://isocpp.org/','_blank')">C++</div>
-    <div class="skill-card" onclick="window.open('https://learn.microsoft.com/en-us/dotnet/csharp/','_blank')">C#</div>
-  </div>
+// TIME
+setInterval(()=>{const n=new Date();time.textContent=n.toLocaleTimeString();date.textContent=n.toDateString();},1000);
 
-  <div class="section socials">
-    <a href="https://youtube.com/@EXOSCREW" class="social"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">Yt</a>
-    <a href="https://t.me/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">Telegram</a>
-    <a href="https://twitch.tv/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968871.png" alt="Twitch">Twitch</a>
-    <a href="https://instagram.com/exoscrew" class="social"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">Insta</a>
-  </div>
+// VIEWS
+let v=localStorage.getItem('views')||0; v++; localStorage.setItem('views',v); views.textContent='Views: '+v;
 
-  <div class="section"><h1 class="signature">エクソスクリュー</h1></div>
+// SECTIONS
+setTimeout(()=>document.querySelectorAll('.section').forEach(e=>e.classList.add('show')),700);
 
-  <div class="section">
-    <h1>Contact</h1>
-    <div id="chat"></div>
-    <input type="text" placeholder="Type your message..." id="chatInput">
-  </div>
+// TRACE
+const ti=traceInput, tm=traceMessages; let t=JSON.parse(localStorage.getItem('traces'))||[];
+function r(){ tm.innerHTML=''; t.slice(-5).forEach(x=>{const d=document.createElement('div'); d.textContent='• '+x; tm.appendChild(d);}); }
+ti.addEventListener('keypress',e=>{ if(e.key==='Enter'&&ti.value.trim()){ t.push(ti.value); localStorage.setItem('traces',JSON.stringify(t)); ti.value=''; r(); }}); r();
 
-  <div class="section hero"><h1>Thanks for visiting! 🕊</h1><h1 class="signature">エクソスクリュー</h1></div>
-</div>
-
-<script>
-// === Three.js Space Scene ===
-const canvas=document.getElementById('space');
+// THREE BG
 const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-const renderer=new THREE.WebGLRenderer({canvas,alpha:true});
-renderer.setSize(window.innerWidth,window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
+const renderer=new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(innerWidth,innerHeight); document.body.appendChild(renderer.domElement);
 
-// Stars
-const starCount=1500;
-const geometry=new THREE.BufferGeometry();
-const positions=new Float32Array(starCount*3);
-for(let i=0;i<starCount*3;i++) positions[i]=(Math.random()-0.5)*1000;
-geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-const material=new THREE.PointsMaterial({color:0xffffff,size:1.5});
-const stars=new THREE.Points(geometry,material);
-scene.add(stars);
+// PARALLAX
+let mx=0,my=0; addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5); my=(e.clientY/innerHeight-.5);});
 
-// Crystal particles
-const crystalGeo = new THREE.BufferGeometry();
-const crystalCount = 500;
-const crystalPos = new Float32Array(crystalCount*3);
-for(let i=0;i<crystalCount*3;i++) crystalPos[i]=(Math.random()-0.5)*1000;
-crystalGeo.setAttribute('position', new THREE.BufferAttribute(crystalPos,3));
-const crystalMat = new THREE.PointsMaterial({color:0x00ffff,size:2,transparent:true,opacity:0.4});
-const crystals = new THREE.Points(crystalGeo, crystalMat);
-scene.add(crystals);
+// STARS
+const g=new THREE.BufferGeometry(); const n=2000; const a=new Float32Array(n*3);
+for(let i=0;i<n*3;i++) a[i]=(Math.random()-.5)*2000;
+g.setAttribute('position',new THREE.BufferAttribute(a,3));
+const stars=new THREE.Points(g,new THREE.PointsMaterial({color:0xffffff,size:1})); scene.add(stars);
 
-// Jets
-const jetGeo=new THREE.ConeGeometry(1.5,4,4);
-const jetMat=new THREE.MeshBasicMaterial({color:0xffffff});
-const jets=[];
-for(let i=0;i<6;i++){
-  const jet=new THREE.Mesh(jetGeo,jetMat);
-  jet.position.set(Math.random()*500-250,Math.random()*200-100,Math.random()*500-250);
-  jet.rotation.x=Math.PI/2;
-  scene.add(jet);
-  jets.push({mesh:jet,speed:0.5+Math.random(),lasers:[]});
-}
+// JETS
+function jet(){const m=new THREE.Mesh(new THREE.ConeGeometry(1,4,3),new THREE.MeshBasicMaterial({color:0xffffff})); m.position.set(Math.random()*50-25,Math.random()*50-25,-50); scene.add(m); return m;}
+const jets=[jet(),jet(),jet(),jet()];
 
-// Lasers
-const lasers=[];
-function shootLaser(jet){
-  const laserGeo=new THREE.CylinderGeometry(0.15,0.15,6,8);
-  const laserMat=new THREE.MeshBasicMaterial({color:0xffffff});
-  const laser=new THREE.Mesh(laserGeo,laserMat);
-  laser.rotation.z=Math.PI/2;
-  laser.position.set(jet.mesh.position.x,jet.mesh.position.y,jet.mesh.position.z-3);
-  scene.add(laser);
-  lasers.push({mesh:laser,speed:3});
-}
+// KITE (real kite shape)
+const kiteShape = new THREE.Shape();
+kiteShape.moveTo(0,2);
+kiteShape.lineTo(1,0);
+kiteShape.lineTo(0,-2);
+kiteShape.lineTo(-1,0);
+kiteShape.lineTo(0,2);
 
-// Majestic Kite
-const kiteGeo=new THREE.ConeGeometry(3,6,4);
-const kiteMat=new THREE.MeshBasicMaterial({color:0x00ffff});
-const kite=new THREE.Mesh(kiteGeo,kiteMat);
-kite.rotation.x=Math.PI;
-kite.position.set(0,200,-50);
+const kiteGeo = new THREE.ShapeGeometry(kiteShape);
+const kiteMat = new THREE.MeshBasicMaterial({color:0xffffff, side:THREE.DoubleSide});
+const kite = new THREE.Mesh(kiteGeo, kiteMat);
+kite.position.y = 50;
 scene.add(kite);
 
-// Comet-style Kite Trail
+// KITE TRAIL (fast fade particles)
 const trailGeo = new THREE.BufferGeometry();
-const trailLength = 400;
-const trailPositions = new Float32Array(trailLength * 3);
-const trailAlphas = new Float32Array(trailLength);
-trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPositions, 3));
-trailGeo.setAttribute('alpha', new THREE.BufferAttribute(trailAlphas, 1));
-const trailMat = new THREE.PointsMaterial({color:0x00ffff,size:2,transparent:true,opacity:1});
+const trailCount = 120;
+const trailPos = new Float32Array(trailCount * 3);
+trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos,3));
+
+const trailMat = new THREE.PointsMaterial({
+  color:0xffffff,
+  size:2,
+  transparent:true,
+  opacity:0.4
+});
+
 const trail = new THREE.Points(trailGeo, trailMat);
 scene.add(trail);
 
-function updateTrail() {
-  for(let i=0;i<trailLength-1;i++){
-    trailPositions[i*3]=trailPositions[(i+1)*3];
-    trailPositions[i*3+1]=trailPositions[(i+1)*3+1];
-    trailPositions[i*3+2]=trailPositions[(i+1)*3+2];
-    trailAlphas[i]=trailAlphas[i+1]*0.95;
-  }
-  const last=trailLength-1;
-  trailPositions[last*3]=kite.position.x+(Math.random()-0.5)*0.5;
-  trailPositions[last*3+1]=kite.position.y+(Math.random()-0.5)*0.5;
-  trailPositions[last*3+2]=kite.position.z+(Math.random()-0.5)*0.5;
-  trailAlphas[last]=1;
-  trail.geometry.attributes.position.needsUpdate=true;
-}
+camera.position.z=60;
 
-// Animate
-camera.position.z=150;
-function animate(){
-  requestAnimationFrame(animate);
-  
-  stars.rotation.y+=0.0015;
-  crystals.rotation.y += 0.0005;
-  crystals.material.opacity = 0.3 + Math.sin(Date.now()*0.005)*0.2;
+function loop(){ requestAnimationFrame(loop);
+  stars.rotation.y+=0.0006;
 
   jets.forEach(j=>{
-    j.mesh.position.x+=j.speed;
-    j.mesh.position.y+=Math.sin(j.mesh.position.x/30)*25;
-    if(Math.random()<0.01) shootLaser(j);
-    if(j.mesh.position.x>300) j.mesh.position.x=-300;
+    j.position.x+=0.2;
+    if(j.position.x>30) j.position.x=-30;
   });
 
-  lasers.forEach((l,i)=>{
-    l.mesh.position.x+=l.speed;
-    if(l.mesh.position.x>300){ scene.remove(l.mesh); lasers.splice(i,1);}
-  });
+  // SUPER FAST KITE + ULTRA PHYSICS
+  kite.position.y -= 0.8;
 
-  if(kite.position.y>10){ kite.position.y -= 0.4; kite.rotation.z += 0.02;} else kite.position.y=10;
-  updateTrail();
+  // zig-zag drift (wind effect)
+  kite.position.x = Math.sin(Date.now()*0.01)*5;
+
+  // rotation tilt
+  kite.rotation.z += 0.1;
+
+  if(kite.position.y < -50){
+    kite.position.y = 50;
+  }
+
+  // TRAIL UPDATE (instant fade feel)
+  for(let i=0;i<trailCount-1;i++){
+    trailPos[i*3] = trailPos[(i+1)*3];
+    trailPos[i*3+1] = trailPos[(i+1)*3+1];
+    trailPos[i*3+2] = trailPos[(i+1)*3+2];
+  }
+
+  const last = trailCount-1;
+  trailPos[last*3] = kite.position.x;
+  trailPos[last*3+1] = kite.position.y;
+  trailPos[last*3+2] = kite.position.z;
+
+  trail.geometry.attributes.position.needsUpdate = true;
+
+  // parallax
+  camera.position.x = mx*5;
+  camera.position.y = -my*5;
+
+  // motion blur illusion (camera micro shake)
+  camera.position.x += (Math.random()-0.5)*0.05;
+  camera.position.y += (Math.random()-0.5)*0.05;
 
   renderer.render(scene,camera);
 }
-animate();
+}
+loop();
 
-// Fade-in Sections
-gsap.utils.toArray('.section').forEach((s,i)=>{
-  gsap.to(s,{opacity:1,duration:1.5,delay:i*0.4,ease:'power2.out'});
-});
-
-// Time & Date
-function updateTime(){const now=new Date();const time=now.toLocaleTimeString();const date=now.toLocaleDateString();document.getElementById('timeDate').textContent=`${time} | ${date}`;}
-setInterval(updateTime,1000); updateTime();
-
-// View Count
-if(!localStorage.getItem('views')) localStorage.setItem('views','0');
-localStorage.setItem('views',parseInt(localStorage.getItem('views'))+1);
-document.getElementById('viewCount').textContent=`Views: ${localStorage.getItem('views')}`;
-
-// Firebase Chat
-const firebaseConfig={apiKey:"YOUR_API_KEY",authDomain:"YOUR_PROJECT_ID.firebaseapp.com",databaseURL:"https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",projectId:"YOUR_PROJECT_ID",storageBucket:"YOUR_PROJECT_ID.appspot.com",messagingSenderId:"YOUR_SENDER_ID",appId:"YOUR_APP_ID"};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
-const chatBox=document.getElementById('chat');
-const chatInput=document.getElementById('chatInput');
-
-function sendMessage(msg){db.ref('globalChat').push().set({text:msg,timestamp:Date.now()});}
-
-db.ref('globalChat').on('child_added', snapshot=>{
-  const msgData=snapshot.val();
-  const msgDiv=document.createElement('div');
-  const date=new Date(msgData.timestamp).toLocaleTimeString();
-  msgDiv.textContent=`[${date}] ${msgData.text}`;
-  chatBox.appendChild(msgDiv);
-  chatBox.scrollTop=chatBox.scrollHeight;
-});
-
-chatInput.addEventListener('keypress',e=>{
-  if(e.key==='Enter' && chatInput.value.trim()!==''){sendMessage(chatInput.value);chatInput.value='';}
-});
-</script>
-</body>
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+</script></body>
 </html>
