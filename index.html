@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXOSCREW</title>
+<title>EXOSCREW — ULTRA CINEMA</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -11,76 +11,71 @@ body{
   color:#fff;
   font-family:'Orbitron',sans-serif;
   overflow:hidden;
-}canvas{position:fixed;top:0;left:0;z-index:-1}
+}canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2}
 
-.container{ position:absolute; top:50%;left:50%; transform:translate(-50%,-50%); text-align:center; width:90%; }
+/* PARALLAX LAYER */ .glow{ position:fixed; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,0.15),transparent 70%); pointer-events:none; z-index:-1; }
 
-/* TITLE (NO FLICKER, ONLY SHIMMER) */ h1{ font-size:3rem; letter-spacing:4px; background:linear-gradient(90deg,#fff,#aaa,#fff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-size:200% auto; animation:shine 4s linear infinite; text-shadow:0 0 10px #fff,0 0 20px rgba(255,255,255,0.6); }
+.wrapper{ display:flex; flex-direction:column; justify-content:space-between; height:100vh; padding:20px; }
+
+.top{ display:flex; justify-content:space-between; font-size:0.8rem; opacity:0.7; }
+
+.center{ display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; text-align:center; }
+
+h1{ font-size:clamp(2rem,6vw,4rem); letter-spacing:4px; background:linear-gradient(90deg,#fff,#aaa,#fff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-size:200% auto; animation:shine 5s linear infinite; text-shadow:0 0 20px rgba(255,255,255,0.7); }
 
 @keyframes shine{ 0%{background-position:0%} 100%{background-position:200%} }
 
-.section{ margin-top:25px; padding:20px; border:1px solid rgba(255,255,255,0.2); border-radius:15px; backdrop-filter:blur(10px); background:rgba(255,255,255,0.03); box-shadow:0 0 20px rgba(255,255,255,0.05); transition:0.3s; }
+.tag{opacity:0.8;margin-top:10px}
 
-.section:hover{ transform:scale(1.02); box-shadow:0 0 30px rgba(255,255,255,0.1); }
+.skill-circle{ position:relative; width:min(260px,60vw); height:min(260px,60vw); margin-top:40px; }
 
-h2{ margin-bottom:10px; text-shadow:0 0 8px #fff; }
+.core{ position:absolute; top:50%;left:50%; transform:translate(-50%,-50%); width:80px;height:80px; border-radius:50%; border:1px solid #fff; display:flex;align-items:center;justify-content:center; box-shadow:0 0 25px rgba(255,255,255,0.7); animation:pulse 2s infinite; }
 
-p{ opacity:0.85; }
+.orbit{ position:absolute; width:100%;height:100%; animation:rotate 10s linear infinite; }
 
-/* CIRCULAR SKILLS */ .skill-circle{ position:relative; width:220px; height:220px; margin:20px auto; }
+.orbit span{ position:absolute; left:50%;top:50%; transform-origin:0 -110px; font-size:0.75rem; text-shadow:0 0 12px #fff; cursor:pointer; }
 
-.center{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:0.9rem; text-shadow:0 0 10px #fff; }
+.orbit span:nth-child(1){transform:rotate(0deg) translateY(-110px)} .orbit span:nth-child(2){transform:rotate(72deg) translateY(-110px)} .orbit span:nth-child(3){transform:rotate(144deg) translateY(-110px)} .orbit span:nth-child(4){transform:rotate(216deg) translateY(-110px)} .orbit span:nth-child(5){transform:rotate(288deg) translateY(-110px)}
 
-.orbit{ position:absolute; width:100%; height:100%; animation:rotate 10s linear infinite; }
+@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}} @keyframes pulse{0%,100%{box-shadow:0 0 25px rgba(255,255,255,0.6)}50%{box-shadow:0 0 50px rgba(255,255,255,1)}}
 
-.orbit span{ position:absolute; left:50%; top:50%; transform-origin:0 -90px; font-size:0.75rem; text-shadow:0 0 8px #fff,0 0 15px rgba(255,255,255,0.6); }
+.bottom{ display:flex; justify-content:center; gap:15px; font-size:0.8rem; }
 
-.orbit span:nth-child(1){transform:rotate(0deg) translateY(-90px)} .orbit span:nth-child(2){transform:rotate(72deg) translateY(-90px)} .orbit span:nth-child(3){transform:rotate(144deg) translateY(-90px)} .orbit span:nth-child(4){transform:rotate(216deg) translateY(-90px)} .orbit span:nth-child(5){transform:rotate(288deg) translateY(-90px)}
+.bottom a{ color:#fff; text-decoration:none; opacity:0.7; }
 
-@keyframes rotate{ from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-
-/* SOCIALS */ .socials{ position:absolute; bottom:20px; left:50%; transform:translateX(-50%); display:flex; gap:15px; }
-
-.socials a{ text-decoration:none; color:#fff; font-size:0.9rem; opacity:0.7; transition:0.3s; }
-
-.socials a:hover{ opacity:1; text-shadow:0 0 10px #fff; }
-
-/* HUD */ .hud{position:absolute;top:15px;right:15px;font-size:0.8rem;opacity:0.7;text-align:right} .views{position:absolute;top:15px;left:15px;font-size:0.8rem;opacity:0.7}
+.bottom a:hover{opacity:1;text-shadow:0 0 10px #fff}
 
 </style>
 </head>
 <body><canvas id="bg"></canvas>
 
-<div class="views" id="views"></div>
-<div class="hud" id="time"></div><div class="container">
-  <h1>EXOSCREW</h1>  <div class="section">
-    <h2>About Me</h2>
-    <p>Coder • Builder • System Thinker<br>
-    I create immersive web experiences and futuristic UI systems.</p>
-  </div>  <div class="section skills">
-  <h2>Skills</h2>
-  <div class="skill-circle">
-    <div class="center">SKILLS</div>
-    <div class="orbit">
-      <span>HTML</span>
-      <span>Python</span>
-      <span>Java</span>
-      <span>C++</span>
-      <span>C#</span>
-    </div>
+<div class="glow" id="glow"></div><div class="wrapper">  <div class="top">
+    <div id="views"></div>
+    <div id="time"></div>
+  </div>  <div class="center">
+    <h1>EXOSCREW</h1>
+    <div class="tag">Ultra Cinema Interface</div><div class="skill-circle">
+  <div class="core">CORE</div>
+  <div class="orbit" id="orbit">
+    <span data-link="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</span>
+    <span data-link="https://www.python.org">Python</span>
+    <span data-link="https://www.java.com">Java</span>
+    <span data-link="https://isocpp.org">C++</span>
+    <span data-link="https://learn.microsoft.com/en-us/dotnet/csharp/">C#</span>
   </div>
 </div>
-</div><div class="socials">
-  <a href="https://youtube.com/@EXOSCREW" target="_blank">YT</a>
-  <a href="https://instagram.com/EXOSCREW" target="_blank">IG</a>
-  <a href="https://twitch.tv/exoscrew" target="_blank">TWITCH</a>
-  <a href="https://t.me/exoscrew" target="_blank">TG</a>
-  <a href="https://x.com/exoscrew" target="_blank">X</a>
-</div><script>
+
+  </div>  <div class="bottom">
+    <a href="https://youtube.com/@EXOSCREW" target="_blank">YT</a>
+    <a href="https://instagram.com/EXOSCREW" target="_blank">IG</a>
+    <a href="https://twitch.tv/exoscrew" target="_blank">TWITCH</a>
+    <a href="https://t.me/exoscrew" target="_blank">TG</a>
+    <a href="https://x.com/exoscrew" target="_blank">X</a>
+  </div></div><script>
 // TIME
 setInterval(()=>{
   const n=new Date();
-  time.innerText=n.toLocaleTimeString()+"\n"+n.toDateString();
+  time.innerText=n.toLocaleTimeString();
 },1000);
 
 // VIEWS
@@ -89,30 +84,54 @@ v++;
 localStorage.setItem("views",v);
 views.innerText="Views: "+v;
 
-// BACKGROUND CINEMA
+// BACKGROUND
 const c=document.getElementById("bg");
 const ctx=c.getContext("2d");
 c.width=innerWidth;
 c.height=innerHeight;
 
+window.addEventListener('resize',()=>{
+  c.width=innerWidth;
+  c.height=innerHeight;
+});
+
 let stars=[];
-for(let i=0;i<150;i++){
+for(let i=0;i<180;i++){
   stars.push({x:Math.random()*c.width,y:Math.random()*c.height,s:Math.random()*2});
 }
 
-function anim(){
-  ctx.fillStyle="rgba(0,0,0,0.3)";
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.35)";
   ctx.fillRect(0,0,c.width,c.height);
 
   ctx.fillStyle="#fff";
   stars.forEach(st=>{
     ctx.fillRect(st.x,st.y,st.s,st.s);
-    st.y+=st.s*1.5;
+    st.y+=st.s*1.8;
     if(st.y>c.height)st.y=0;
   });
 
-  requestAnimationFrame(anim);
+  requestAnimationFrame(draw);
 }
-anim();
+draw();
+
+// PARALLAX GLOW
+const glow=document.getElementById('glow');
+window.addEventListener('mousemove',e=>{
+  glow.style.left=e.clientX-150+'px';
+  glow.style.top=e.clientY-150+'px';
+});
+
+// ORBIT CONTROL
+const orbit=document.getElementById('orbit');
+window.addEventListener('mousemove',e=>{
+  const speed=(e.clientX/window.innerWidth)*6+4;
+  orbit.style.animationDuration=speed+'s';
+});
+
+// CLICK SKILLS
+ document.querySelectorAll('.orbit span').forEach(el=>{
+   el.onclick=()=>window.open(el.dataset.link,'_blank');
+ });
 </script></body>
 </html>
