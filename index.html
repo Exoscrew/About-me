@@ -8,7 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;color:#fff;font-family:'Orbitron',sans-serif;overflow:hidden}
-canvas{position:fixed;top:0;left:0;z-index:-1}/* HUD */ .hud{position:fixed;top:10px;left:12px;font-size:12px;opacity:.9}
+canvas{position:fixed;top:0;left:0;z-index:-1;pointer-events:none}/* HUD */ .hud{position:fixed;top:10px;left:12px;font-size:12px;opacity:.9}
 
 /* GLASS */ .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.25);border-radius:18px;box-shadow:0 10px 40px rgba(255,255,255,.06)}
 
@@ -18,7 +18,15 @@ canvas{position:fixed;top:0;left:0;z-index:-1}/* HUD */ .hud{position:fixed;top:
 
 .skills a{display:inline-block;margin:8px;padding:10px 14px;border:1px solid #fff;color:#fff;text-decoration:none;border-radius:12px} .skills a:hover{background:#fff;color:#000}
 
-.socials a{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin:8px;border:1px solid #fff;border-radius:14px;color:#fff;text-decoration:none} .socials a:hover{background:#fff;color:#000}
+.socials a{ display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; margin:8px; border:1px solid #fff; border-radius:14px; color:#fff; text-decoration:none; position:relative; overflow:hidden; transition:0.3s; }
+
+.socials a:hover{ background:#fff; color:#000; box-shadow:0 0 15px #fff; }
+
+/* ripple effect */ .socials a::after{ content:""; position:absolute; width:10px; height:10px; background:rgba(255,255,255,0.6); border-radius:50%; transform:scale(0); opacity:0; }
+
+.socials a:active::after{ animation:ripple 0.5s ease-out; }
+
+@keyframes ripple{ from{transform:scale(0);opacity:0.8} to{transform:scale(6);opacity:0} } .socials a:hover{background:#fff;color:#000}
 
 /* TRACE */ #traceBox{position:fixed;bottom:14px;right:14px;width:240px;padding:10px} #traceTitle{text-align:center;margin-bottom:6px} #traceMessages{max-height:100px;overflow:auto;margin-bottom:6px} #traceMessages div{opacity:0;animation:fadeIn .5s forwards} #traceInput{width:100%;background:#000;border:1px solid #fff;color:#fff;padding:6px;border-radius:8px}
 
@@ -40,10 +48,10 @@ canvas{position:fixed;top:0;left:0;z-index:-1}/* HUD */ .hud{position:fixed;top:
     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JS</a>
   </div>  <div class="section socials">
     <h2>Socials</h2>
-    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-    <a href="#" title="Twitch"><i class="fab fa-twitch"></i></a>
-    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+    <a href="https://www.youtube.com/@EXOSCREW" target="_blank" title="YouTube @EXOSCREW"><i class="fab fa-youtube"></i></a>
+    <a href="https://www.twitch.tv/exoscrew" target="_blank" title="Twitch exoscrew"><i class="fab fa-twitch"></i></a>
+    <a href="https://www.instagram.com/exoscrew" target="_blank" title="Instagram EXOSCREW"><i class="fab fa-instagram"></i></a>
+    <a href="https://t.me/exoscrew" target="_blank" title="Telegram @exoscrew"><i class="fab fa-telegram"></i></a>
   </div>  <div class="section">
     <h2>Contact</h2>
     <p>exoscrew@proton.me</p>
@@ -75,7 +83,8 @@ ti.addEventListener('keypress',e=>{ if(e.key==='Enter'&&ti.value.trim()){ t.push
 // THREE BG
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
-const renderer=new THREE.WebGLRenderer({alpha:true});
+const renderer=new THREE.WebGLRenderer({alpha:true, antialias:true});
+renderer.setClearColor(0x000000, 0);
 renderer.setSize(innerWidth,innerHeight); document.body.appendChild(renderer.domElement);
 
 // PARALLAX
