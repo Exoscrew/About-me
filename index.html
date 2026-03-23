@@ -2,97 +2,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exoscrew — FORCE16</title>
+<title>EXOSCREW</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{ background:#000; color:#fff; font-family:'Orbitron',sans-serif; overflow:hidden; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#000;
+  color:#fff;
+  font-family:'Orbitron',sans-serif;
+  overflow:hidden;
+}canvas{position:fixed;top:0;left:0;z-index:-1}
 
-/* MAIN CENTER */ .container{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+.container{ position:absolute; top:50%;left:50%; transform:translate(-50%,-50%); text-align:center; width:90%; }
 
-h1{ font-size:3rem; letter-spacing:4px; background:linear-gradient(90deg,#fff,#aaa,#fff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-size:200% auto; animation:shine 4s linear infinite, flicker 2s infinite; }
-
-p{ margin-top:10px; opacity:0.8; }
+/* TITLE (NO FLICKER, ONLY SHIMMER) */ h1{ font-size:3rem; letter-spacing:4px; background:linear-gradient(90deg,#fff,#aaa,#fff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-size:200% auto; animation:shine 4s linear infinite; text-shadow:0 0 10px #fff,0 0 20px rgba(255,255,255,0.6); }
 
 @keyframes shine{ 0%{background-position:0%} 100%{background-position:200%} }
 
-@keyframes flicker{ 0%,18%,22%,25%,53%,57%,100%{opacity:1} 20%,24%,55%{opacity:0.4} }
+.section{ margin-top:25px; padding:20px; border:1px solid rgba(255,255,255,0.2); border-radius:15px; backdrop-filter:blur(10px); background:rgba(255,255,255,0.03); box-shadow:0 0 20px rgba(255,255,255,0.05); transition:0.3s; }
 
-/* SOCIALS */ .socials{ position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; gap:20px; }
+.section:hover{ transform:scale(1.02); box-shadow:0 0 30px rgba(255,255,255,0.1); }
 
-.socials a{ color:#fff; text-decoration:none; font-size:0.9rem; opacity:0.7; transition:0.3s; }
+h2{ margin-bottom:10px; text-shadow:0 0 8px #fff; }
+
+p{ opacity:0.85; }
+
+/* CIRCULAR SKILLS */ .skill-circle{ position:relative; width:220px; height:220px; margin:20px auto; }
+
+.center{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:0.9rem; text-shadow:0 0 10px #fff; }
+
+.orbit{ position:absolute; width:100%; height:100%; animation:rotate 10s linear infinite; }
+
+.orbit span{ position:absolute; left:50%; top:50%; transform-origin:0 -90px; font-size:0.75rem; text-shadow:0 0 8px #fff,0 0 15px rgba(255,255,255,0.6); }
+
+.orbit span:nth-child(1){transform:rotate(0deg) translateY(-90px)} .orbit span:nth-child(2){transform:rotate(72deg) translateY(-90px)} .orbit span:nth-child(3){transform:rotate(144deg) translateY(-90px)} .orbit span:nth-child(4){transform:rotate(216deg) translateY(-90px)} .orbit span:nth-child(5){transform:rotate(288deg) translateY(-90px)}
+
+@keyframes rotate{ from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+/* SOCIALS */ .socials{ position:absolute; bottom:20px; left:50%; transform:translateX(-50%); display:flex; gap:15px; }
+
+.socials a{ text-decoration:none; color:#fff; font-size:0.9rem; opacity:0.7; transition:0.3s; }
 
 .socials a:hover{ opacity:1; text-shadow:0 0 10px #fff; }
 
-/* TIME + DATE */ .hud{ position:absolute; top:20px; right:20px; font-size:0.8rem; opacity:0.7; text-align:right; }
-
-/* VIEW COUNTER (LOCAL) */ .views{ position:absolute; top:20px; left:20px; font-size:0.8rem; opacity:0.7; }
-
-/* SPACE WAR */ canvas{ position:fixed; top:0; left:0; z-index:-1; }
+/* HUD */ .hud{position:absolute;top:15px;right:15px;font-size:0.8rem;opacity:0.7;text-align:right} .views{position:absolute;top:15px;left:15px;font-size:0.8rem;opacity:0.7}
 
 </style>
 </head>
-<body><canvas id="space"></canvas>
+<body><canvas id="bg"></canvas>
 
-<div class="views" id="views">Views: 0</div><div class="hud" id="time"></div><div class="container">
-  <h1>EXOSCREW</h1>
-  <p>Minimal. Futuristic. Controlled Chaos.</p>
+<div class="views" id="views"></div>
+<div class="hud" id="time"></div><div class="container">
+  <h1>EXOSCREW</h1>  <div class="section">
+    <h2>About Me</h2>
+    <p>Coder • Builder • System Thinker<br>
+    I create immersive web experiences and futuristic UI systems.</p>
+  </div>  <div class="section skills">
+  <h2>Skills</h2>
+  <div class="skill-circle">
+    <div class="center">SKILLS</div>
+    <div class="orbit">
+      <span>HTML</span>
+      <span>Python</span>
+      <span>Java</span>
+      <span>C++</span>
+      <span>C#</span>
+    </div>
+  </div>
+</div>
 </div><div class="socials">
   <a href="https://youtube.com/@EXOSCREW" target="_blank">YT</a>
   <a href="https://instagram.com/EXOSCREW" target="_blank">IG</a>
   <a href="https://twitch.tv/exoscrew" target="_blank">TWITCH</a>
-  <a href="https://t.me/exoscrew" target="_blank">TELEGRAM</a>
+  <a href="https://t.me/exoscrew" target="_blank">TG</a>
+  <a href="https://x.com/exoscrew" target="_blank">X</a>
 </div><script>
+// TIME
+setInterval(()=>{
+  const n=new Date();
+  time.innerText=n.toLocaleTimeString()+"\n"+n.toDateString();
+},1000);
 
-/* TIME */
-function updateTime(){
-  const now=new Date();
-  document.getElementById("time").innerText=
-    now.toLocaleTimeString()+"\n"+now.toDateString();
-}
-setInterval(updateTime,1000);
-updateTime();
-
-/* VIEW COUNTER (LOCAL STORAGE) */
+// VIEWS
 let v=localStorage.getItem("views")||0;
 v++;
 localStorage.setItem("views",v);
-document.getElementById("views").innerText="Views: "+v;
+views.innerText="Views: "+v;
 
-/* SPACE WAR */
-const canvas=document.getElementById("space");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+// BACKGROUND CINEMA
+const c=document.getElementById("bg");
+const ctx=c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
 
 let stars=[];
-for(let i=0;i<120;i++){
-  stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,s:Math.random()*2});
+for(let i=0;i<150;i++){
+  stars.push({x:Math.random()*c.width,y:Math.random()*c.height,s:Math.random()*2});
 }
 
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+function anim(){
+  ctx.fillStyle="rgba(0,0,0,0.3)";
+  ctx.fillRect(0,0,c.width,c.height);
 
   ctx.fillStyle="#fff";
   stars.forEach(st=>{
     ctx.fillRect(st.x,st.y,st.s,st.s);
-    st.y+=st.s;
-    if(st.y>canvas.height)st.y=0;
+    st.y+=st.s*1.5;
+    if(st.y>c.height)st.y=0;
   });
 
-  requestAnimationFrame(draw);
+  requestAnimationFrame(anim);
 }
-
-draw();
-
-/* LASERS */
-setInterval(()=>{
-  const x=Math.random()*canvas.width;
-  ctx.strokeStyle="#fff";
-  ctx.beginPath();
-  ctx.moveTo(x,0);
-  ctx.lineTo(x+50,200);
-  ctx.stroke();
-},300);
-
+anim();
 </script></body>
 </html>
