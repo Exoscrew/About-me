@@ -2,80 +2,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXOSCREW — ULTRA CINEMA</title>
+<title>EXOSCREW</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:#000;
-  color:#fff;
-  font-family:'Orbitron',sans-serif;
-  overflow:hidden;
-}canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2}
+body{background:#000;color:#fff;font-family:'Orbitron',sans-serif;overflow:hidden}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2}.wrapper{display:flex;flex-direction:column;justify-content:space-between;height:100vh;padding:20px} .top{display:flex;justify-content:space-between;font-size:0.8rem;opacity:0.7} .center{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center}
 
-/* PARALLAX LAYER */ .glow{ position:fixed; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,0.15),transparent 70%); pointer-events:none; z-index:-1; }
+h1{ font-size:clamp(2rem,6vw,4rem); letter-spacing:4px; background:linear-gradient(90deg,#fff,#aaa,#fff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:shine 5s linear infinite; text-shadow:0 0 20px rgba(255,255,255,0.7); } @keyframes shine{0%{background-position:0%}100%{background-position:200%}}
 
-.wrapper{ display:flex; flex-direction:column; justify-content:space-between; height:100vh; padding:20px; }
-
-.top{ display:flex; justify-content:space-between; font-size:0.8rem; opacity:0.7; }
-
-.center{ display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; text-align:center; }
-
-h1{ font-size:clamp(2rem,6vw,4rem); letter-spacing:4px; background:linear-gradient(90deg,#fff,#aaa,#fff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-size:200% auto; animation:shine 5s linear infinite; text-shadow:0 0 20px rgba(255,255,255,0.7); }
-
-@keyframes shine{ 0%{background-position:0%} 100%{background-position:200%} }
-
-.tag{opacity:0.8;margin-top:10px}
-
-.skill-circle{ position:relative; width:min(260px,60vw); height:min(260px,60vw); margin-top:40px; }
+/* MULTI ORBIT SYSTEM */ .system{ position:relative; width:min(320px,80vw); height:min(320px,80vw); margin-top:40px; }
 
 .core{ position:absolute; top:50%;left:50%; transform:translate(-50%,-50%); width:80px;height:80px; border-radius:50%; border:1px solid #fff; display:flex;align-items:center;justify-content:center; box-shadow:0 0 25px rgba(255,255,255,0.7); animation:pulse 2s infinite; }
 
-.orbit{ position:absolute; width:100%;height:100%; animation:rotate 10s linear infinite; }
+.orbit{ position:absolute; top:50%;left:50%; transform:translate(-50%,-50%); border:1px solid rgba(255,255,255,0.2); border-radius:50%; animation:rotate linear infinite; }
 
-.orbit span{ position:absolute; left:50%;top:50%; transform-origin:0 -110px; font-size:0.75rem; text-shadow:0 0 12px #fff; cursor:pointer; }
+.orbit span{ position:absolute; top:50%;left:50%; transform:translate(-50%,-50%); font-size:0.7rem; text-shadow:0 0 10px #fff; cursor:pointer; }
 
-.orbit span:nth-child(1){transform:rotate(0deg) translateY(-110px)} .orbit span:nth-child(2){transform:rotate(72deg) translateY(-110px)} .orbit span:nth-child(3){transform:rotate(144deg) translateY(-110px)} .orbit span:nth-child(4){transform:rotate(216deg) translateY(-110px)} .orbit span:nth-child(5){transform:rotate(288deg) translateY(-110px)}
+/* INDIVIDUAL ORBITS */ .o1{width:120px;height:120px;animation-duration:6s} .o2{width:160px;height:160px;animation-duration:8s} .o3{width:200px;height:200px;animation-duration:10s} .o4{width:240px;height:240px;animation-duration:12s} .o5{width:280px;height:280px;animation-duration:14s}
 
-@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}} @keyframes pulse{0%,100%{box-shadow:0 0 25px rgba(255,255,255,0.6)}50%{box-shadow:0 0 50px rgba(255,255,255,1)}}
+.o1 span{transform:translate(-50%,-50%) translateY(-60px)} .o2 span{transform:translate(-50%,-50%) translateY(-80px)} .o3 span{transform:translate(-50%,-50%) translateY(-100px)} .o4 span{transform:translate(-50%,-50%) translateY(-120px)} .o5 span{transform:translate(-50%,-50%) translateY(-140px)}
 
-.bottom{ display:flex; justify-content:center; gap:15px; font-size:0.8rem; }
+@keyframes rotate{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}} @keyframes pulse{0%,100%{box-shadow:0 0 25px rgba(255,255,255,0.6)}50%{box-shadow:0 0 50px rgba(255,255,255,1)}}
 
-.bottom a{ color:#fff; text-decoration:none; opacity:0.7; }
+.bottom{display:flex;justify-content:center;gap:15px;font-size:0.8rem} .bottom a{color:#fff;text-decoration:none;opacity:0.7} .bottom a:hover{opacity:1;text-shadow:0 0 10px #fff} </style>
 
-.bottom a:hover{opacity:1;text-shadow:0 0 10px #fff}
-
-</style>
 </head>
 <body><canvas id="bg"></canvas>
 
-<div class="glow" id="glow"></div><div class="wrapper">  <div class="top">
-    <div id="views"></div>
-    <div id="time"></div>
-  </div>  <div class="center">
-    <h1>EXOSCREW</h1>
-    <div class="tag">Ultra Cinema Interface</div><div class="skill-circle">
-  <div class="core">CORE</div>
-  <div class="orbit" id="orbit">
-    <span data-link="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</span>
-    <span data-link="https://www.python.org">Python</span>
-    <span data-link="https://www.java.com">Java</span>
-    <span data-link="https://isocpp.org">C++</span>
-    <span data-link="https://learn.microsoft.com/en-us/dotnet/csharp/">C#</span>
-  </div>
-</div>
-
-  </div>  <div class="bottom">
-    <a href="https://youtube.com/@EXOSCREW" target="_blank">YT</a>
-    <a href="https://instagram.com/EXOSCREW" target="_blank">IG</a>
-    <a href="https://twitch.tv/exoscrew" target="_blank">TWITCH</a>
-    <a href="https://t.me/exoscrew" target="_blank">TG</a>
-    <a href="https://x.com/exoscrew" target="_blank">X</a>
-  </div></div><script>
+<div class="wrapper"><div class="top">
+<div id="views"></div>
+<div id="time"></div>
+</div><div class="center">
+<h1>EXOSCREW</h1><div class="system">
+<div class="core">CORE</div><div class="orbit o1"><span data-link="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</span></div>
+<div class="orbit o2"><span data-link="https://www.python.org">Python</span></div>
+<div class="orbit o3"><span data-link="https://www.java.com">Java</span></div>
+<div class="orbit o4"><span data-link="https://isocpp.org">C++</span></div>
+<div class="orbit o5"><span data-link="https://learn.microsoft.com/en-us/dotnet/csharp/">C#</span></div></div>
+</div><div class="bottom">
+<a href="https://youtube.com/@EXOSCREW" target="_blank">YT</a>
+<a href="https://instagram.com/EXOSCREW" target="_blank">IG</a>
+<a href="https://twitch.tv/exoscrew" target="_blank">TWITCH</a>
+<a href="https://t.me/exoscrew" target="_blank">TG</a>
+<a href="https://x.com/exoscrew" target="_blank">X</a>
+</div></div><script>
 // TIME
 setInterval(()=>{
-  const n=new Date();
-  time.innerText=n.toLocaleTimeString();
+ const n=new Date();
+ time.innerText=n.toLocaleTimeString();
 },1000);
 
 // VIEWS
@@ -84,52 +59,36 @@ v++;
 localStorage.setItem("views",v);
 views.innerText="Views: "+v;
 
-// BACKGROUND
+// BG
 const c=document.getElementById("bg");
 const ctx=c.getContext("2d");
 c.width=innerWidth;
 c.height=innerHeight;
 
 window.addEventListener('resize',()=>{
-  c.width=innerWidth;
-  c.height=innerHeight;
+ c.width=innerWidth;
+ c.height=innerHeight;
 });
 
 let stars=[];
-for(let i=0;i<180;i++){
-  stars.push({x:Math.random()*c.width,y:Math.random()*c.height,s:Math.random()*2});
+for(let i=0;i<150;i++){
+ stars.push({x:Math.random()*c.width,y:Math.random()*c.height,s:Math.random()*2});
 }
 
 function draw(){
-  ctx.fillStyle="rgba(0,0,0,0.35)";
-  ctx.fillRect(0,0,c.width,c.height);
-
-  ctx.fillStyle="#fff";
-  stars.forEach(st=>{
-    ctx.fillRect(st.x,st.y,st.s,st.s);
-    st.y+=st.s*1.8;
-    if(st.y>c.height)st.y=0;
-  });
-
-  requestAnimationFrame(draw);
+ ctx.fillStyle="rgba(0,0,0,0.35)";
+ ctx.fillRect(0,0,c.width,c.height);
+ ctx.fillStyle="#fff";
+ stars.forEach(st=>{
+  ctx.fillRect(st.x,st.y,st.s,st.s);
+  st.y+=st.s*1.5;
+  if(st.y>c.height)st.y=0;
+ });
+ requestAnimationFrame(draw);
 }
 draw();
 
-// PARALLAX GLOW
-const glow=document.getElementById('glow');
-window.addEventListener('mousemove',e=>{
-  glow.style.left=e.clientX-150+'px';
-  glow.style.top=e.clientY-150+'px';
-});
-
-// ORBIT CONTROL
-const orbit=document.getElementById('orbit');
-window.addEventListener('mousemove',e=>{
-  const speed=(e.clientX/window.innerWidth)*6+4;
-  orbit.style.animationDuration=speed+'s';
-});
-
-// CLICK SKILLS
+// CLICK LINKS
  document.querySelectorAll('.orbit span').forEach(el=>{
    el.onclick=()=>window.open(el.dataset.link,'_blank');
  });
